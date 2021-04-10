@@ -1,0 +1,28 @@
+server/node_modules
+server/dist
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+web/node_modules
+
+# next.js
+web/.next/
+web/out/
+
+# production
+web/build
+
+# debug
+web/npm-debug.log*
+web/yarn-debug.log*
+web/yarn-error.log*
+
+# local env files
+web/.env.local
+web/.env.development.local
+web/.env.test.local
+web/.env.production.local
+
+# vercel
+web/.vercel
