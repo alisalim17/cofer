@@ -1,10 +1,17 @@
+import Head from "next/head";
 import React from "react";
-import { useLoginMutation } from "../src/generated/graphql";
+import ProtectedRoute from "../ui/ProtectedRoute";
+import { withApollo } from "../utils/withApollo";
 
-interface Props {}
-
-const Index: React.FC<Props> = () => {
-  return <div>hello</div>;
+const Index = () => {
+  return (
+    <ProtectedRoute>
+      <Head>
+        <title>Home | Cofer</title>
+      </Head>
+      hello
+    </ProtectedRoute>
+  );
 };
 
-export default Index;
+export default withApollo({ ssr: true })(Index);

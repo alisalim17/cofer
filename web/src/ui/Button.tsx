@@ -31,13 +31,13 @@ const Button: React.FC<ButtonProps> = ({
           width,
           height,
         }}
-        className={`common: focus:outline-no-chrome py-1 px-2 rounded-5  primary: text-button bg-accent hover:bg-accent-hover utils: flex justify-center items-center ${extraClassName}`}
+        className={`common: focus:outline-no-chrome  py-1 px-2 rounded-5  primary: text-button bg-accent focus:bg-accent-hover hover:bg-accent-hover utils: flex justify-center items-center ${extraClassName}`}
         disabled={loading}
         type="button"
         {...props}
       >
         {loading ? (
-          <span className="">
+          <span>
             <Loader />
           </span>
         ) : (

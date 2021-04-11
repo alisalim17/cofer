@@ -67,6 +67,7 @@ html,
 body,
 #__next {
   background-color: var(--color-primary-900);
+  color: var(--color-button-text);
   height: 100%;
   width: 100%;
 }

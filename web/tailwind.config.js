@@ -60,6 +60,7 @@ module.exports = {
     },
     spacing: {
       0: "0px",
+      0.5: "3px",
       1: "5px",
       2: "10px",
       3: "15px",
@@ -75,7 +76,7 @@ module.exports = {
       400: "400px",
     },
     borderWidth: {
-      DEFAULT: "1px",
+      default: "1px",
     },
     extend: {
       borderRadius: {
