@@ -1,6 +1,8 @@
 import "tailwindcss/tailwind.css";
 import Head from "next/head";
 
+import "../styles/globals.css";
+
 function MyApp({ Component, pageProps }) {
   return (
     <>
@@ -10,7 +12,7 @@ function MyApp({ Component, pageProps }) {
           content="width=device-width,initial-scale=1,user-scalable=no,user-scalable=0"
         />
       </Head>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </>
   );
 }

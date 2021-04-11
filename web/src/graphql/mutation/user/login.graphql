@@ -1,5 +1,15 @@
 mutation Login($input: LoginInput!) {
   login(input: $input) {
     ok
+    errors {
+      field 
+      message
+    }
+    user {
+      id 
+      username
+    }
+    
   }
+
 }
