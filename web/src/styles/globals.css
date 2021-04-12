@@ -70,11 +70,31 @@ body,
   color: var(--color-button-text);
   height: 100%;
   width: 100%;
+  
 }
 
-audio {
-  width: 0;
-  display: none !important;
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-700); 
+  border-radius: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+textarea {
+  min-height: 100px;
+  max-height: 350px;
 }
 
 html {

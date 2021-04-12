@@ -2,12 +2,11 @@ mutation Login($input: LoginInput!) {
   login(input: $input) {
     ok
     errors {
-      field 
+      field
       message
     }
     user {
-      id 
-      username
+      ...RegularUserFragment
     }
+  }
 }
- }

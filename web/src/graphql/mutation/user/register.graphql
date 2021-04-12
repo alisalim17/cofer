@@ -2,12 +2,11 @@ mutation Register($input: RegisterInput!) {
   register(input: $input) {
     ok
     errors {
-      field 
+      field
       message
     }
     user {
-      id 
-      username
+      ...RegularUserFragment
     }
+  }
 }
- }

@@ -9,8 +9,13 @@ const UnProtectedRoute: React.FC<Props> = ({ children }) => {
   const { data, loading } = useMeQuery();
   const router = useRouter();
 
+  console.log("unpro", router);
+
   if (loading) return <CenteredLoader />;
-  if (!loading && data?.me) router.push("/");
+  if (!loading && data?.me) {
+    router.replace((router.query.next || "/") as string);
+  }
+
   return <div>{children}</div>;
 };
 

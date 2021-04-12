@@ -1,0 +1,15 @@
+mutation CreateCodeReviewRequest($input: CreateCodeReviewRequestInput!) {
+  createCodeReviewRequest(input: $input) {
+    ok
+    errors {
+      field
+      message
+    }
+    codeReviewRequest {
+      id
+      numDays
+      tags
+      creatorId
+    }
+  }
+}

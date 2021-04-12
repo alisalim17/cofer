@@ -12,6 +12,7 @@ import UnProtectedRoute from "../ui/UnProtectedRoute";
 import Wrapper from "../ui/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+import { routeNext } from "../hooks/routeNext";
 
 interface FormValues {
   usernameOrEmail: string;
@@ -46,7 +47,7 @@ const Login = () => {
             if (res.data?.login.errors) {
               setErrors(toErrorMap(res.data.login.errors));
             } else if (res.data?.login.user) {
-              router.push("/");
+              router.push((router.query?.next || "/") as string);
             }
           }}
         >

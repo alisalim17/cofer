@@ -9,13 +9,15 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const { data, loading } = useMeQuery();
   const router = useRouter();
 
-  if (loading) return <CenteredLoader />;
   useEffect(() => {
-    if (!loading && !data?.me) router.push("/login");
-  }, [loading, data]);
+    if (!loading && !data?.me) {
+      console.log("from pro");
+      router.push(`/login?next=${router.pathname}`);
+    }
+  }, [loading, data, router]);
 
   if (data?.me) return <div>{children}</div>;
-  return null;
+  return <CenteredLoader />;
 };
 
 export default ProtectedRoute;
