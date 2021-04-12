@@ -13,6 +13,12 @@ import Wrapper from "../ui/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
 
+interface FormValues {
+  username: string;
+  email: string;
+  password: string;
+}
+
 const Register = () => {
   const [register] = useRegisterMutation();
   const router = useRouter();
@@ -23,7 +29,7 @@ const Register = () => {
         <title>Sign up | Cofer</title>
       </Head>
       <Wrapper extraClassName="flex flex-col justify-center" mobileFull>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ username: "", email: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
             const res = await register({

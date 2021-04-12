@@ -13,6 +13,11 @@ import Wrapper from "../ui/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
 
+interface FormValues {
+  usernameOrEmail: string;
+  password: string;
+}
+
 const Login = () => {
   const [login] = useLoginMutation();
   const router = useRouter();
@@ -23,7 +28,7 @@ const Login = () => {
         <title>Sign in | Cofer</title>
       </Head>
       <Wrapper extraClassName="flex flex-col justify-center" mobileFull>
-        <Formik
+        <Formik<FormValues>
           initialValues={{ usernameOrEmail: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
             const res = await login({

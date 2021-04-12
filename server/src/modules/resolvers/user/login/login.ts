@@ -8,7 +8,7 @@ import { formatYupError } from "../../../../utils/formatYupError";
 import { errorMessages } from "../../../shared/registirationErrorMessages";
 import { LoginInput } from "../../types/Input/LoginInput";
 import { FieldError } from "../../types/Response/FieldError";
-import { RegisterResponse } from "../../types/Response/RegisterResponse";
+import { RegisterResponse } from "../../types/Response/user/RegisterResponse";
 
 const schema = yup.object().shape({
   usernameOrEmail: yup.string().min(2, errorMessages.usernameShort),

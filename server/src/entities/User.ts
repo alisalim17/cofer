@@ -1,5 +1,12 @@
 import { Field, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { CodeReviewRequest } from "./CodeReviewRequest";
 
 @ObjectType()
 @Entity()
@@ -18,4 +25,7 @@ export class User extends BaseEntity {
 
   @Column()
   password!: string;
+
+  @OneToMany(() => CodeReviewRequest, (crr) => crr.creator)
+  codeReviewRequests: CodeReviewRequest[];
 }

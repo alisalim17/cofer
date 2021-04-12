@@ -6,7 +6,7 @@ import { MyContext } from "../../../../types/MyContext";
 import { formatYupError } from "../../../../utils/formatYupError";
 import { errorMessages } from "../../../shared/registirationErrorMessages";
 import { RegisterInput } from "../../types/Input/RegisterInput";
-import { RegisterResponse } from "../../types/Response/RegisterResponse";
+import { RegisterResponse } from "../../types/Response/user/RegisterResponse";
 
 const schema = yup.object().shape({
   username: yup
