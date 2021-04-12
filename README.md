@@ -3,7 +3,7 @@
 
 <h3 align="center">
   <span> · </span>
-  <a href="https://github.com/alsalim17/cofer/CONTRIBUTING.md">Contribute</a>
+  <a href="https://github.com/alisalim17/cofer/blob/master/CONTRUBITE.md">Contribute</a>
 </h3>
 
 ## What is Cofer ? 
