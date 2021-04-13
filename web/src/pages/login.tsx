@@ -12,7 +12,6 @@ import UnProtectedRoute from "../ui/UnProtectedRoute";
 import Wrapper from "../ui/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
-import { routeNext } from "../hooks/routeNext";
 
 interface FormValues {
   usernameOrEmail: string;

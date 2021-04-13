@@ -105,3 +105,11 @@ html {
   overflow: auto;
 }
 
+.css-12jo7m5 {
+  color: var(--color-button-text) !important;
+}
+
+.css-xb97g8:hover {  
+  background: var(--color-primary-300) !important;
+  color: var(--color-button-text) !important;
+}

@@ -1,14 +1,16 @@
 import { Formik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React from "react";
-import { useLoginMutation } from "../generated/graphql";
+import React, { useState } from "react";
+import { useCreateCodeReviewRequestMutation } from "../generated/graphql";
 import Button from "../ui/Button";
 import Header from "../ui/Header";
 import InputField from "../ui/InputField";
+import MultiSelectTags from "../ui/MultiSelectTags";
 import MyForm from "../ui/MyForm";
 import ProtectedRoute from "../ui/ProtectedRoute";
 import Wrapper from "../ui/Wrapper";
+import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
 
 interface FormValues {
@@ -19,6 +21,15 @@ interface FormValues {
 }
 
 const CreateCodeReviewRequest = () => {
+  const [tags, setTags] = useState([]);
+  const [tagsError, setTagsError] = useState("");
+  const router = useRouter();
+  const [createCodeRR] = useCreateCodeReviewRequestMutation();
+
+  const handleOnChangeSelect = (res) => {
+    if (res[res.length - 1]) setTags([...tags, res[res.length - 1].value]);
+  };
+
   return (
     <ProtectedRoute>
       <Head>
@@ -28,11 +39,19 @@ const CreateCodeReviewRequest = () => {
         <Formik<FormValues>
           initialValues={{ numDays: 3, codeUrl: "", tags: [], notes: "" }}
           onSubmit={async (values, { setErrors }) => {
-            // if (res.data?.login.errors) {
-            //   setErrors(toErrorMap(res.data.login.errors));
-            // } else if (res.data?.login.user) {
-            //   router.push("/");
-            // }
+            console.log(tags);
+            const res = await createCodeRR({
+              variables: {
+                input: { ...values, tags },
+              },
+            });
+            console.log(res);
+            if (res.data?.createCodeReviewRequest.errors) {
+              setErrors(toErrorMap(res.data.createCodeReviewRequest.errors));
+              res.data.createCodeReviewRequest.errors.forEach((i) => {
+                if (i.field === "tags") setTagsError(i.message);
+              });
+            } else if (res.data?.createCodeReviewRequest.ok) router.push("/");
           }}
         >
           {({ isSubmitting }) => (
@@ -45,15 +64,13 @@ const CreateCodeReviewRequest = () => {
                 placeholder="github link"
                 label="Github Link"
               />
-
               <InputField
                 name="numDays"
                 placeholder="number of the days"
                 label="Number Of Days"
                 type="number"
               />
-
-              {/* TODO ADD HERE AUTOCOMPLETE FIELD */}
+              <MultiSelectTags onChange={handleOnChangeSelect} />
 
               <InputField
                 textarea
@@ -61,7 +78,6 @@ const CreateCodeReviewRequest = () => {
                 placeholder="your notes"
                 label="Notes"
               />
-
               <Button
                 width={175}
                 height={40}
