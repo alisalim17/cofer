@@ -26,6 +26,7 @@ interface HeaderProps {
   size: keyof typeof sizeClassNames;
   fontWeight: keyof typeof fontWeightClassNames;
   centered?: boolean;
+  color?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -33,10 +34,11 @@ const Header: React.FC<HeaderProps> = ({
   size,
   fontWeight,
   centered,
+  color = "text-button",
 }) => {
   return (
     <div
-      className={`text-primary-100 ${sizeClassNames[size]} ${
+      className={`${color} ${sizeClassNames[size]} ${
         fontWeightClassNames[fontWeight]
       } ${centered ? "text-center" : ""}`}
     >

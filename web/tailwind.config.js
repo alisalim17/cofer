@@ -86,6 +86,15 @@ module.exports = {
     borderWidth: {
       default: "1px",
     },
+    translate: (theme, { negative }) => ({
+      ...theme("spacing"),
+      ...negative(theme("spacing")),
+      "-full": "-100%",
+      "-1/2": "-50%",
+      "1/2": "50%",
+      "11/12": "91%",
+      full: "100%",
+    }),
     extend: {
       borderRadius: {
         5: "5px",

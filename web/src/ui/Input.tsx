@@ -2,12 +2,15 @@ import React, { InputHTMLAttributes } from "react";
 import { textFieldStyle } from "./InputField";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-  props: any;
-  field: any;
+  props?: any;
+  field?: any;
+  extraClassName?: string;
 };
 
-const Input: React.FC<InputProps> = ({ ...props }) => {
-  return <input className={textFieldStyle.input} {...props} />;
+const Input: React.FC<InputProps> = ({ extraClassName = "", ...props }) => {
+  return (
+    <input className={`${textFieldStyle.input} ${extraClassName}`} {...props} />
+  );
 };
 
 export default Input;

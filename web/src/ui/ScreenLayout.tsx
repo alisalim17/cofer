@@ -1,6 +1,9 @@
 /* eslint-disable default-case */
 import React from "react";
-import { SCREEN_COLUMNS_TYPE } from "../utils/hooks/useScreenType";
+import {
+  SCREEN_COLUMNS_TYPE,
+  useScreenType,
+} from "../utils/hooks/useScreenType";
 import LeftPanel from "./Panels/LeftPanel";
 import MiddlePanel from "./Panels/MiddlePanel";
 import RightPanel from "./Panels/RightPanel";
@@ -9,8 +12,9 @@ interface Props {
   screenType: string;
 }
 
-const ScreenLayout: React.FC<Props> = ({ screenType }) => {
+const ScreenLayout: React.FC<Props> = () => {
   let middle = null;
+  const screenType = useScreenType();
   switch (screenType) {
     case SCREEN_COLUMNS_TYPE[3]:
       middle = (

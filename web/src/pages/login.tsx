@@ -52,7 +52,12 @@ const Login = () => {
         >
           {({ isSubmitting }) => (
             <MyForm>
-              <Header centered size="4xl" fontWeight="bold">
+              <Header
+                color="text-primary-100"
+                centered
+                size="4xl"
+                fontWeight="bold"
+              >
                 Cofer
               </Header>
               <InputField

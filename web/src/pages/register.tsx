@@ -54,7 +54,12 @@ const Register = () => {
         >
           {({ isSubmitting }) => (
             <MyForm>
-              <Header centered size="4xl" fontWeight="bold">
+              <Header
+                centered
+                color="text-primary-100"
+                size="4xl"
+                fontWeight="bold"
+              >
                 Cofer
               </Header>
               <InputField

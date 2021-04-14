@@ -79,7 +79,7 @@ body,
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary-700); 
-  border-radius: 10px;
+  
 }
 
 input::-webkit-outer-spin-button,
@@ -112,4 +112,12 @@ html {
 .css-xb97g8:hover {  
   background: var(--color-primary-300) !important;
   color: var(--color-button-text) !important;
+}
+
+.dropdown {
+  transform: translateX(-100%);
+}
+
+.w-full {
+  width: 100%;
 }

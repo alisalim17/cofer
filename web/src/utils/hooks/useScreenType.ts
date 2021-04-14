@@ -11,6 +11,8 @@ export const useScreenType = () => {
   const is3Cols = useMediaQuery({ minWidth: 1440 });
   const is2Cols = useMediaQuery({ minWidth: 1265 });
   const is1Cols = useMediaQuery({ minWidth: 800 });
+  const fullscreen = useMediaQuery({ maxWidth: 799 });
+  console.log("full scr", fullscreen, is1Cols);
 
   if (is3Cols) {
     return SCREEN_COLUMNS_TYPE[3];
@@ -21,6 +23,7 @@ export const useScreenType = () => {
   if (is1Cols) {
     return SCREEN_COLUMNS_TYPE[1];
   }
-
-  return SCREEN_COLUMNS_TYPE.fullscreen;
+  if (fullscreen) {
+    return SCREEN_COLUMNS_TYPE.fullscreen;
+  }
 };

@@ -56,7 +56,12 @@ const CreateCodeReviewRequest = () => {
         >
           {({ isSubmitting }) => (
             <MyForm width={500}>
-              <Header centered size="3xl" fontWeight="bold">
+              <Header
+                centered
+                color="text-primary-100"
+                size="3xl"
+                fontWeight="bold"
+              >
                 Create Code Review
               </Header>
               <InputField
