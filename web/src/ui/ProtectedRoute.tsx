@@ -10,13 +10,12 @@ const ProtectedRoute: React.FC<Props> = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !data?.me) {
-      console.log("from pro");
-      router.push(`/login?next=${router.pathname}`);
-    }
+    if (!loading && !data?.me) router.push(`/login?next=${router.pathname}`);
   }, [loading, data, router]);
 
-  if (data?.me) return <div>{children}</div>;
+  if (data?.me) {
+    return children as any;
+  }
   return <CenteredLoader />;
 };
 
