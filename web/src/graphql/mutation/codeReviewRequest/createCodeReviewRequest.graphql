@@ -6,7 +6,7 @@ mutation CreateCodeReviewRequest($input: CreateCodeReviewRequestInput!) {
       message
     }
     codeReviewRequest {
-       ...RegularCodeReviewRequestFragment
+       id
     }
   }
 }

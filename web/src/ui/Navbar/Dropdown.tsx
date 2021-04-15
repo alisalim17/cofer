@@ -30,7 +30,7 @@ const Dropdown = () => {
           <button
             onClick={() => setOpen(!open)}
             type="button"
-            className="focus:outline-no-chrome "
+            className="focus:outline-no-chrome"
           >
             <img
               className="rounded-full"

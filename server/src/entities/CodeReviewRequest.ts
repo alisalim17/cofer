@@ -36,10 +36,9 @@ export class CodeReviewRequest extends BaseEntity {
   @Field(() => String)
   @Column({ type: "text" })
   @Index()
-  creatorId!: string;
+  ownerId!: string;
 
-  @Field(() => [User])
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.codeReviewRequests)
-  @JoinColumn({ name: "owner" })
-  creator!: Promise<User>;
+  owner!: Promise<User>;
 }

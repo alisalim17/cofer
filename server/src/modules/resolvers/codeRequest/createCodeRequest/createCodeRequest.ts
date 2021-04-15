@@ -40,8 +40,7 @@ export class CreateCodeReviewRequestResolver {
 
     const codeReviewRequest = await CodeReviewRequest.create({
       ...input,
-
-      creatorId: req.session.userId,
+      ownerId: req.session.userId,
     }).save();
     return {
       ok: true,

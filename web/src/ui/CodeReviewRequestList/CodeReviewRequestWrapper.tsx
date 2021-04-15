@@ -10,9 +10,13 @@ const CodeReviewRequestWrapper: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-8">
-      {data?.codeReviewRequests.map((codeRR) => (
-        <CodeReviewRequest key={`code-rr-${codeRR.id}`} data={codeRR} />
-      ))}
+      {data?.codeReviewRequests?.length > 0 ? (
+        data?.codeReviewRequests.map((codeRR) => (
+          <CodeReviewRequest key={`code-rr-${codeRR.id}`} data={codeRR} />
+        ))
+      ) : (
+        <div>no review</div>
+      )}
     </div>
   );
 };

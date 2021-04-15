@@ -29,7 +29,7 @@ const MiddlePanel: React.FC = () => {
           style={{
             display: "grid",
             maxWidth: "100%",
-            gridTemplateColumns: "10% 60% 10%",
+            gridTemplateColumns: "10% 1fr 12%",
             columnGap: 20,
           }}
           className="bg-primary-900"

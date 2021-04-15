@@ -86,7 +86,7 @@ const Login = () => {
         </Formik>
         <div className="flex justify-center">
           <div className="text-primary-100 py-2 px-4 rounded-5 border-default border-primary-800 mt-4 text-sm">
-            New to GitHub? <Link href="/register">Create an account.</Link>
+            New to Cofer? <Link href="/register">Create an account.</Link>
           </div>
         </div>
       </Wrapper>

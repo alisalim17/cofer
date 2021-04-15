@@ -78,7 +78,7 @@ body,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary-700); 
+  background: var(--color-primary-600); 
   
 }
 
@@ -95,6 +95,11 @@ input[type=number] {
 textarea {
   min-height: 100px;
   max-height: 350px;
+}
+
+::-webkit-resizer {
+  display: none;
+  background: var(--color-primary-700);
 }
 
 html {

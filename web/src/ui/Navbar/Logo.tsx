@@ -7,8 +7,11 @@ import {
 
 const Logo = () => {
   const screenType = useScreenType();
+
+  const isShowText = screenType === SCREEN_COLUMNS_TYPE[3];
+
   return (
-    <div className="flex md:items-center">
+    <div className={`flex ${isShowText ? "md:items-center" : null}`}>
       <svg
         width="40"
         height="40"
@@ -25,7 +28,7 @@ const Logo = () => {
           fill="#000"
         />
       </svg>
-      {screenType === SCREEN_COLUMNS_TYPE[3] ? (
+      {isShowText ? (
         <Header
           extraClassName="ml-2"
           color="text-accent-hover"

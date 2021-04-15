@@ -53,13 +53,12 @@ export const startServer = async () => {
                 simpleEstimator({ defaultComplexity: 1 }),
               ],
             });
-            const maximumComplexity = 10;
+            const maximumComplexity = 20;
             if (complexity > maximumComplexity) {
               throw new Error(
                 `Sorry, too complicated query! ${complexity} is over ${maximumComplexity} that is the max allowed complexity.`
               );
             }
-            console.log("Used query complexity points:", complexity);
           },
         }),
       },

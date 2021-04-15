@@ -38,7 +38,6 @@ const customStyles = {
     "&:hover": {
       background: "var(--color-primary-600)",
     },
-    padding: "7.5px",
   }),
   multiValue: (provided) => ({
     ...provided,
@@ -46,7 +45,6 @@ const customStyles = {
     color: "var(--color-button-text)",
   }),
   menu: (provided) => ({
-    ...provided,
     background: "var(--color-primary-700)",
   }),
   control: () => ({

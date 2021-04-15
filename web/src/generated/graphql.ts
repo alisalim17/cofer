@@ -21,8 +21,8 @@ export type CodeReviewRequest = {
   codeUrl: Scalars['String'];
   tags: Array<Scalars['String']>;
   notes?: Maybe<Scalars['String']>;
-  creatorId: Scalars['String'];
-  creator: Array<User>;
+  ownerId: Scalars['String'];
+  owner: User;
 };
 
 export type CreateCodeReviewRequestInput = {
@@ -102,7 +102,11 @@ export type User = {
 
 export type RegularCodeReviewRequestFragmentFragment = (
   { __typename?: 'CodeReviewRequest' }
-  & Pick<CodeReviewRequest, 'id' | 'numDays' | 'codeUrl' | 'tags' | 'notes' | 'creatorId'>
+  & Pick<CodeReviewRequest, 'id' | 'numDays' | 'codeUrl' | 'tags' | 'notes' | 'ownerId'>
+  & { owner: (
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'username'>
+  ) }
 );
 
 export type RegularUserFragmentFragment = (
@@ -125,7 +129,7 @@ export type CreateCodeReviewRequestMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>>, codeReviewRequest?: Maybe<(
       { __typename?: 'CodeReviewRequest' }
-      & RegularCodeReviewRequestFragmentFragment
+      & Pick<CodeReviewRequest, 'id'>
     )> }
   ) }
 );
@@ -199,7 +203,11 @@ export const RegularCodeReviewRequestFragmentFragmentDoc = gql`
   codeUrl
   tags
   notes
-  creatorId
+  ownerId
+  owner {
+    id
+    username
+  }
 }
     `;
 export const RegularUserFragmentFragmentDoc = gql`
@@ -217,11 +225,11 @@ export const CreateCodeReviewRequestDocument = gql`
       message
     }
     codeReviewRequest {
-      ...RegularCodeReviewRequestFragment
+      id
     }
   }
 }
-    ${RegularCodeReviewRequestFragmentFragmentDoc}`;
+    `;
 export type CreateCodeReviewRequestMutationFn = Apollo.MutationFunction<CreateCodeReviewRequestMutation, CreateCodeReviewRequestMutationVariables>;
 
 /**

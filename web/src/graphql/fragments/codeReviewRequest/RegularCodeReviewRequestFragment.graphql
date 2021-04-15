@@ -4,5 +4,9 @@ fragment RegularCodeReviewRequestFragment on CodeReviewRequest {
     codeUrl
     tags
     notes
-    creatorId
+    ownerId
+    owner  {
+       id 
+       username
+    }
 }

@@ -43,6 +43,7 @@ module.exports = {
       auto: "auto",
       ...theme("spacing"),
       375: "375px",
+      "1/6": "16%",
     }),
     colors: {
       button: "var(--color-button-text)",
