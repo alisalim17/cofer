@@ -1,0 +1,8 @@
+fragment RegularCodeReviewRequestFragment on CodeReviewRequest {
+    id
+    numDays
+    codeUrl
+    tags
+    notes
+    creatorId
+}

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useMeQuery } from "../generated/graphql";
-import CenteredLoader from "./CenteredLoader";
+import { useMeQuery } from "../../generated/graphql";
+import CenteredLoader from "../Loader/CenteredLoader";
 
 interface Props {}
 

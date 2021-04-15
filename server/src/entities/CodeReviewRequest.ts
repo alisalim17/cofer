@@ -3,6 +3,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -34,6 +35,7 @@ export class CodeReviewRequest extends BaseEntity {
 
   @Field(() => String)
   @Column({ type: "text" })
+  @Index()
   creatorId!: string;
 
   @Field(() => [User])

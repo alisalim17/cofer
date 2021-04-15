@@ -7,6 +7,7 @@ import {
 } from "../../utils/hooks/useScreenType";
 import Dropdown from "../Navbar/Dropdown";
 import Logo from "../Navbar/Logo";
+import CodeReviewRequestWrapper from "../CodeReviewRequestList/CodeReviewRequestWrapper";
 
 const MiddlePanel: React.FC = () => {
   const screenType = useScreenType();
@@ -27,7 +28,8 @@ const MiddlePanel: React.FC = () => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "10% 1fr 10%",
+            maxWidth: "100%",
+            gridTemplateColumns: "10% 60% 10%",
             columnGap: 20,
           }}
           className="bg-primary-900"
@@ -45,13 +47,7 @@ const MiddlePanel: React.FC = () => {
       <div style={{ top: "-1px" }} className="sticky  pt-5 bg-primary-900 z-20">
         {topBar}
       </div>
-      <div className="flex flex-col space-y-8">
-        {Array.from({ length: 20 }).map(() => (
-          <div className="h-9 w-full bg-primary-800 rounded-lg transition-colors duration-300 ease-in-out hover:bg-primary-700">
-            heey
-          </div>
-        ))}
-      </div>
+      <CodeReviewRequestWrapper />
     </div>
   );
 };

@@ -1,9 +1,8 @@
+import { useField } from "formik";
 import React from "react";
 import Select from "react-select";
-import { textFieldStyle } from "./InputField";
-import Label from "./Label";
-import { useField } from "formik";
-import InputFieldError from "./InputFieldError";
+import InputFieldError from "./TextField/InputFieldError";
+import Label from "./TextField/Label";
 
 export interface AutoCompleteFieldValues {
   value: string;

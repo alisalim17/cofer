@@ -38,5 +38,5 @@
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts"
-, "jest.setup.ts"  ]
+, "jest.setup.ts", "src/modules/resolvers/codeRequest/codeReviewRequests"  ]
 }

@@ -1,5 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react";
-import Loader from "./Loader";
+import Loader from "../Loader/Loader";
 
 const styles = {
   variants: {

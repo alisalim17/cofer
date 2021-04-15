@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import InputField, { textFieldStyle } from "../InputField";
-import Input from "../Input";
 
 const SearchBar = () => {
   const [focus, setFocus] = useState(false);
 
   return (
     <div className="pb-5 pt-">
-      <div className="flex bg-primary-700 rounded-8">
+      <div className="flex bg-primary-700 rounded-5">
         <div className="flex items-center justify-center ml-2">
           <svg
             className={`w-4 h-4 transition-colors duration-300 ease-in-out ${
@@ -32,7 +30,7 @@ const SearchBar = () => {
           id="placeholder"
           name="placeholder"
           placeholder="Search for something"
-          className={`bg-primary-700 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out`}
+          className="w-full bg-primary-700 rounded-8 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         />
       </div>
     </div>

@@ -7,7 +7,11 @@ import { createTypeormConn } from "./utils/createTypeormConn";
 import { createSchema } from "./utils/createSchema";
 import { redis } from "./utils/redis";
 import { sessionMiddleware } from "./utils/sessionMiddleware";
-
+import {
+  fieldExtensionsEstimator,
+  getComplexity,
+  simpleEstimator,
+} from "graphql-query-complexity";
 const PORT = process.env.PORT || 4000;
 
 export const startServer = async () => {
@@ -26,13 +30,40 @@ export const startServer = async () => {
 
   app.use(sessionMiddleware);
 
+  const schema = await createSchema();
+
   const apolloServer = new ApolloServer({
-    schema: await createSchema(),
+    schema,
     context: ({ req, res }: MyContext) => ({
       req,
       res,
       redis,
     }),
+    plugins: [
+      {
+        requestDidStart: () => ({
+          didResolveOperation({ request, document }) {
+            const complexity = getComplexity({
+              schema,
+              operationName: request.operationName,
+              query: document,
+              variables: request.variables,
+              estimators: [
+                fieldExtensionsEstimator(),
+                simpleEstimator({ defaultComplexity: 1 }),
+              ],
+            });
+            const maximumComplexity = 10;
+            if (complexity > maximumComplexity) {
+              throw new Error(
+                `Sorry, too complicated query! ${complexity} is over ${maximumComplexity} that is the max allowed complexity.`
+              );
+            }
+            console.log("Used query complexity points:", complexity);
+          },
+        }),
+      },
+    ],
     uploads: false,
   });
 
