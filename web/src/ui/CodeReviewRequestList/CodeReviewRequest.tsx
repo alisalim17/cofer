@@ -1,4 +1,6 @@
 import React from "react";
+import Twemoji from "../Twemoji";
+import { parse } from "twemoji-parser";
 import { RegularCodeReviewRequestFragmentFragment } from "../../generated/graphql";
 import Header from "../Header";
 
@@ -8,6 +10,7 @@ interface CodeReviewRequestProps {
 
 const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
   data: {
+    id,
     owner: { username },
     numDays,
     notes,
@@ -20,7 +23,7 @@ const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
       </Header>
       <span className="text-sm text-primary-300">in {numDays} days</span>
       <p className="mt-2 text-left break-all truncate whitespace-pre-wrap text-primary-200">
-        {notes}
+        <Twemoji id={"2412"} text={notes} />
       </p>
       {/* @TODO MAKE THIS DIVIDER COMPONENT , MAKE WIDTH 20% IN MOBILE*/}
       <div

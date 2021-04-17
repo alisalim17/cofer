@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useCreateCodeReviewRequestMutation } from "../generated/graphql";
+import EmotePicker from "../ui/EmotePicker";
 import Button from "../ui/Form/Button";
 import MultiSelectTags from "../ui/Form/MultiSelectTags";
 import MyForm from "../ui/Form/MyForm";
@@ -21,7 +22,9 @@ interface FormValues {
 }
 
 const CreateCodeReviewRequest = () => {
+  const [showEmoji, setShowEmoji] = useState(false);
   const [tags, setTags] = useState([]);
+  const [notes, setNotes] = useState("");
   const [tagsError, setTagsError] = useState("");
   const router = useRouter();
   const [createCodeRR] = useCreateCodeReviewRequestMutation();
@@ -29,6 +32,12 @@ const CreateCodeReviewRequest = () => {
   const handleOnChangeSelect = (res) => {
     if (res[res.length - 1]) setTags([...tags, res[res.length - 1].value]);
   };
+
+  const handleOnClickEmojiWrapper = () => {
+    setShowEmoji(!showEmoji);
+  };
+
+  console.log(notes);
 
   return (
     <ProtectedRoute>
@@ -42,7 +51,7 @@ const CreateCodeReviewRequest = () => {
             console.log(tags);
             const res = await createCodeRR({
               variables: {
-                input: { ...values, tags },
+                input: { ...values, tags, notes },
               },
             });
             console.log(res);
@@ -77,12 +86,22 @@ const CreateCodeReviewRequest = () => {
               />
               <MultiSelectTags onChange={handleOnChangeSelect} />
 
+              {showEmoji ? (
+                <EmotePicker notes={notes} setNotes={setNotes} />
+              ) : null}
               <InputField
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
                 textarea
                 name="notes"
                 placeholder="your notes"
                 label="Notes"
-              />
+                wrapperClassName="flex"
+              >
+                <button onClick={handleOnClickEmojiWrapper} type="button">
+                  emoji
+                </button>
+              </InputField>
               <Button
                 width={175}
                 height={40}

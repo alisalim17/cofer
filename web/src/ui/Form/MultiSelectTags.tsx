@@ -45,6 +45,7 @@ const customStyles = {
     color: "var(--color-button-text)",
   }),
   menu: (provided) => ({
+    ...provided,
     background: "var(--color-primary-700)",
   }),
   control: () => ({

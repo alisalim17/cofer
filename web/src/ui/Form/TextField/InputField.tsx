@@ -10,6 +10,7 @@ type InputFieldProps = InputHTMLAttributes<HTMLInputElement> &
     name: string;
     textarea?: boolean;
     variant?: string;
+    wrapperClassName?: string;
   };
 
 // '' => false
@@ -27,6 +28,8 @@ const InputField: React.FC<InputFieldProps> = ({
   textarea,
   size: _,
   variant = "outline",
+  wrapperClassName = "",
+  children,
   ...props
 }) => {
   const [field, { error }] = useField(props);
@@ -38,7 +41,11 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <>
       {label ? <Label htmlFor={field.name}>{label}</Label> : null}
-      <TextAreaOrInput {...field} {...props} id={field.name} />
+      <div className={wrapperClassName}>
+        <TextAreaOrInput {...field} {...props} id={field.name} />
+        {children}
+      </div>
+
       {error ? <div className={textFieldStyle.error}>{error}</div> : null}
     </>
   );

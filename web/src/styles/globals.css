@@ -75,11 +75,11 @@ body,
 
 ::-webkit-scrollbar {
   width: 10px;
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary-600); 
-  
 }
 
 input::-webkit-outer-spin-button,
@@ -125,4 +125,13 @@ html {
 
 .w-full {
   width: 100%;
+}
+
+
+
+.emoji {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
 }
