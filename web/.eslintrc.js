@@ -40,5 +40,6 @@ module.exports = {
     "operator-linebreak": 0,
     "prefer-destructuring": 0,
     "jsx-a11y/label-has-associated-control": 0,
+    "react/no-array-index-key": 0,
   },
 };

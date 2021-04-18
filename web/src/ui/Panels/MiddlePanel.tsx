@@ -8,16 +8,21 @@ import {
 import Dropdown from "../Navbar/Dropdown";
 import Logo from "../Navbar/Logo";
 import CodeReviewRequestWrapper from "../CodeReviewRequestList/CodeReviewRequestWrapper";
+import NavbarMiddle from "../Navbar/NavbarMiddle";
 
 const MiddlePanel: React.FC = () => {
   const screenType = useScreenType();
-  let topBar = <SearchBar />;
+  let topBar = (
+    <>
+      <NavbarMiddle />
+    </>
+  );
 
   switch (screenType) {
     case SCREEN_COLUMNS_TYPE[1]:
       topBar = (
         <div style={{ display: "grid", gridTemplateColumns: "90% 1fr" }}>
-          <SearchBar />
+          <NavbarMiddle />
           <Dropdown />
         </div>
       );
@@ -35,7 +40,7 @@ const MiddlePanel: React.FC = () => {
           className="bg-primary-900"
         >
           <Logo />
-          <SearchBar />
+          <NavbarMiddle />
           <Dropdown />
         </div>
       );

@@ -75,11 +75,11 @@ body,
 
 ::-webkit-scrollbar {
   width: 10px;
-  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-primary-600); 
+  border-radius: 5px;
 }
 
 input::-webkit-outer-spin-button,

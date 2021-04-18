@@ -13,12 +13,14 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   extraClassName?: string;
   width?: number;
   height?: number;
+  padding?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
   loading,
   centered,
   extraClassName = "",
+  padding = "py-1 px-2",
   width,
   height,
   children,
@@ -31,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
           width,
           height,
         }}
-        className={`common: focus:outline-no-chrome  py-1 px-2 rounded-5  primary: text-button bg-accent focus:bg-accent-hover hover:bg-accent-hover utils: flex justify-center items-center ${extraClassName}`}
+        className={`common: focus:outline-no-chrome rounded-5 ${padding} primary: text-button bg-accent focus:bg-accent-hover hover:bg-accent-hover utils: flex justify-center items-center font-bold ${extraClassName}`}
         disabled={loading}
         type="button"
         {...props}
