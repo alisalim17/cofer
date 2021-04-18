@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useClickOutside } from "../../utils/hooks/useClickOutside";
 
 const Dropdown = () => {
   const [open, setOpen] = useState(false);
@@ -6,22 +7,14 @@ const Dropdown = () => {
   const buttonRef = useRef(null);
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleOnClick);
+    const handleClick = (e) => {
+      useClickOutside(wrapperRef, buttonRef, e.target, setOpen);
+    };
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener("mousedown", handleOnClick);
+      document.removeEventListener("mousedown", handleClick);
     };
   });
-
-  const handleOnClick = (e) => {
-    if (
-      wrapperRef?.current &&
-      buttonRef?.current &&
-      !wrapperRef.current.contains(e.target) &&
-      !buttonRef.current.contains(e.target)
-    ) {
-      setOpen(false);
-    }
-  };
 
   return (
     <div className="relative">

@@ -1,8 +1,11 @@
 import { Formik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useCreateCodeReviewRequestMutation } from "../generated/graphql";
+import { useCreateCodeRRStore } from "../stores/useCreateCodeRRStore";
+import { useEmojiPickerStore } from "../stores/useEmojiPickerStore";
 import EmotePicker from "../ui/EmotePicker";
 import Button from "../ui/Form/Button";
 import MultiSelectTags from "../ui/Form/MultiSelectTags";
@@ -11,8 +14,22 @@ import InputField from "../ui/Form/TextField/InputField";
 import Header from "../ui/Header";
 import ProtectedRoute from "../ui/utilities/ProtectedRoute";
 import Wrapper from "../ui/utilities/Wrapper";
+import { useClickOutside } from "../utils/hooks/useClickOutside";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+
+function getDifference(a, b) {
+  let i = 0;
+  let j = 0;
+  let result = "";
+
+  while (j < b.length) {
+    if (a[i] !== b[j] || i === a.length) result += b[j];
+    else i += 1;
+    j += 1;
+  }
+  return result;
+}
 
 interface FormValues {
   numDays: number;
@@ -22,22 +39,38 @@ interface FormValues {
 }
 
 const CreateCodeReviewRequest = () => {
-  const [showEmoji, setShowEmoji] = useState(false);
-  const [tags, setTags] = useState([]);
-  const [notes, setNotes] = useState("");
-  const [tagsError, setTagsError] = useState("");
+  const { open, setOpen } = useEmojiPickerStore();
+  const { notes, tags, setNotes, setTags } = useCreateCodeRRStore();
   const router = useRouter();
   const [createCodeRR] = useCreateCodeReviewRequestMutation();
+
+  const wrapperRef = useRef(null);
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      useClickOutside(wrapperRef, buttonRef, e.target, setOpen);
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  });
 
   const handleOnChangeSelect = (res) => {
     if (res[res.length - 1]) setTags([...tags, res[res.length - 1].value]);
   };
 
   const handleOnClickEmojiWrapper = () => {
-    setShowEmoji(!showEmoji);
+    setOpen(!open);
   };
 
-  console.log(notes);
+  const handleNotesOnChange = useDebouncedCallback((prevText, currText) => {
+    console.log("fired");
+    if (getDifference(prevText, currText) === ":") {
+      setOpen(!open);
+    }
+  }, 1000);
 
   return (
     <ProtectedRoute>
@@ -57,9 +90,6 @@ const CreateCodeReviewRequest = () => {
             console.log(res);
             if (res.data?.createCodeReviewRequest.errors) {
               setErrors(toErrorMap(res.data.createCodeReviewRequest.errors));
-              res.data.createCodeReviewRequest.errors.forEach((i) => {
-                if (i.field === "tags") setTagsError(i.message);
-              });
             } else if (res.data?.createCodeReviewRequest.ok) router.push("/");
           }}
         >
@@ -86,19 +116,29 @@ const CreateCodeReviewRequest = () => {
               />
               <MultiSelectTags onChange={handleOnChangeSelect} />
 
-              {showEmoji ? (
-                <EmotePicker notes={notes} setNotes={setNotes} />
+              {open ? (
+                <div ref={wrapperRef}>
+                  <EmotePicker notes={notes} setNotes={setNotes} />
+                </div>
               ) : null}
               <InputField
                 value={notes}
-                onChange={(e) => setNotes(e.target.value)}
+                onChange={(e) => {
+                  const prevText = notes;
+                  setNotes(e.target.value);
+                  handleNotesOnChange(prevText, e.target.value);
+                }}
                 textarea
                 name="notes"
                 placeholder="your notes"
                 label="Notes"
                 wrapperClassName="flex"
               >
-                <button onClick={handleOnClickEmojiWrapper} type="button">
+                <button
+                  ref={buttonRef}
+                  onClick={handleOnClickEmojiWrapper}
+                  type="button"
+                >
                   emoji
                 </button>
               </InputField>

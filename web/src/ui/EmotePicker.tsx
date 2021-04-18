@@ -1,6 +1,8 @@
-import { parse } from "twemoji-parser";
-import React from "react";
-import { emoteMap, customEmojis } from "./EmoteData";
+/* eslint-disable default-case */
+/* eslint-disable no-fallthrough */
+import React, { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import { customEmojis } from "./EmoteData";
 import Input from "./Form/TextField/Input";
 
 interface Props {
@@ -9,34 +11,81 @@ interface Props {
 }
 
 const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
+  const [emojis, setEmojis] = useState(customEmojis);
+  const [text, setText] = useState("");
+  const [activeIndex, setActiveIndex] = useState(1);
   const handleOnClickEmoji = (e) => {
     setNotes(`${notes} :${e.shortNames[0]}:`);
   };
 
+  const debouncedSearch = useDebouncedCallback(
+    // function
+    (value) => {
+      const newEmojis = customEmojis.filter((emoji) => {
+        let include = false;
+
+        for (let i = 0; i < emoji.keywords.length; i += 1) {
+          if (emoji.keywords[i].includes(value)) {
+            include = true;
+            break;
+          }
+        }
+        return include;
+      });
+      setEmojis(newEmojis);
+    },
+    // delay in ms
+    1000
+  );
+
   return (
-    <div
-      style={{
-        maxHeight: 200,
-        maxWidth: 350,
-        transform: "translateY(50%)",
-      }}
-      className="absolute bg-primary-700 overflow-y-auto"
-    >
-      <div className="grid grid-cols-7 gap-2">
-        {customEmojis.map((e, i) => {
-          return (
-            <button
-              id={`emoji-picker-${i}-${Math.random() * 1000}`}
-              type="button"
-              onClick={() => handleOnClickEmoji(e)}
-            >
-              <img alt="emoji" src={`https://dogehouse.tv/${e.imageUrl}`} />
-            </button>
-          );
-        })}
+    <div className="relative">
+      <div
+        style={{
+          height: 200,
+          width: 350,
+          transform: "translateY(-100%)",
+        }}
+        className="absolute bg-primary-700 overflow-y-auto"
+      >
         <div>
-            {/* TODO ADD THE LIBRARY WHICH YOU TYPE THEN EVENT TRIGGRED(SLAYT APP-SELMAN K.) */}
-          <Input name="emote-search-bar" onChange={() =>}/>
+          <div className="sticky top-0 bg-primary-700">
+            <div className="p-1">
+              <Input
+                placeholder="search for emojis"
+                name="emote-search-bar"
+                noRing
+                onChange={(e) => {
+                  debouncedSearch(e.target.value);
+                  setText(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-7 gap-2">
+            {emojis && emojis?.length > 0 ? (
+              emojis.map((e, i) => {
+                return (
+                  <button
+                    tabIndex={1}
+                    className={`flex justify-center ${
+                      activeIndex === i ? "bg-primary-200" : null
+                    }`}
+                    key={`emoji-picker-${Math.random() * 1000}`}
+                    type="button"
+                    onClick={() => handleOnClickEmoji(e)}
+                  >
+                    <img
+                      alt="emoji"
+                      src={`https://dogehouse.tv/${e.imageUrl}`}
+                    />
+                  </button>
+                );
+              })
+            ) : (
+              <div>no option</div>
+            )}
+          </div>
         </div>
       </div>
     </div>
