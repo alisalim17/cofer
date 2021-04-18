@@ -1,10 +1,11 @@
+/* eslint-disable consistent-return */
 import React, { Fragment } from "react";
+import { v4 as uuid } from "uuid";
 import { customEmojis } from "./EmoteData";
 
 interface TwemojiProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   text: string;
   className?: string;
-  id: string;
 }
 
 const Twemoji: React.FC<TwemojiProps> = ({ text }) => {
@@ -13,14 +14,16 @@ const Twemoji: React.FC<TwemojiProps> = ({ text }) => {
   const splittedText = text.split(" ");
 
   const result = splittedText.map((t) => {
+    const key = `text-${uuid()}`;
     if (t.match(emojiRegex)) {
       const matched = customEmojis.filter(
         (customEmoji) => customEmoji.shortNames[0] === t.slice(1, t.length - 1)
       );
       if (!matched) return;
+
       return (
         <img
-          key={`emoji-${Math.random() * 100}`}
+          key={key}
           className="emoji"
           alt="emoji"
           src={`https://dogehouse.tv/${matched[0]?.imageUrl}`}
@@ -28,9 +31,7 @@ const Twemoji: React.FC<TwemojiProps> = ({ text }) => {
       );
     }
     const textWithSpace = `${t} `;
-    return (
-      <Fragment key={`emoji-${Math.random() * 1000}`}>{textWithSpace}</Fragment>
-    );
+    return <Fragment key={key}>{textWithSpace}</Fragment>;
   });
   return result;
 };

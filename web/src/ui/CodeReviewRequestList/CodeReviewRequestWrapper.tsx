@@ -9,7 +9,7 @@ const CodeReviewRequestWrapper: React.FC = () => {
   if (loading) return <CenteredLoader />;
 
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-8 pb-8">
       {data?.codeReviewRequests?.length > 0 ? (
         data?.codeReviewRequests.map((codeRR) => (
           <CodeReviewRequest key={`code-rr-${codeRR.id}`} data={codeRR} />

@@ -37,6 +37,7 @@
     "@types/react-responsive": "^8.0.2",
     "@types/react-select": "^4.0.14",
     "@types/twemoji-parser": "^12.1.0",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "autoprefixer": "^10.0.4",

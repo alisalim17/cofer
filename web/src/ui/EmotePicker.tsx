@@ -1,6 +1,4 @@
-/* eslint-disable default-case */
-/* eslint-disable no-fallthrough */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { customEmojis } from "./EmoteData";
 import Input from "./Form/TextField/Input";
@@ -18,25 +16,20 @@ const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
     setNotes(`${notes} :${e.shortNames[0]}:`);
   };
 
-  const debouncedSearch = useDebouncedCallback(
-    // function
-    (value) => {
-      const newEmojis = customEmojis.filter((emoji) => {
-        let include = false;
+  const debouncedSearch = useDebouncedCallback((value) => {
+    const newEmojis = customEmojis.filter((emoji) => {
+      let include = false;
 
-        for (let i = 0; i < emoji.keywords.length; i += 1) {
-          if (emoji.keywords[i].includes(value)) {
-            include = true;
-            break;
-          }
+      for (let i = 0; i < emoji.keywords.length; i += 1) {
+        if (emoji.keywords[i].includes(value)) {
+          include = true;
+          break;
         }
-        return include;
-      });
-      setEmojis(newEmojis);
-    },
-    // delay in ms
-    1000
-  );
+      }
+      return include;
+    });
+    setEmojis(newEmojis);
+  }, 1000);
 
   return (
     <div className="relative">
@@ -67,10 +60,7 @@ const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
               emojis.map((e, i) => {
                 return (
                   <button
-                    tabIndex={1}
-                    className={`flex justify-center ${
-                      activeIndex === i ? "bg-primary-200" : null
-                    }`}
+                    className="flex justify-center"
                     key={`emoji-picker-${Math.random() * 1000}`}
                     type="button"
                     onClick={() => handleOnClickEmoji(e)}
