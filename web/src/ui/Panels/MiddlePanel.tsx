@@ -9,6 +9,7 @@ import Dropdown from "../Navbar/Dropdown";
 import Logo from "../Navbar/Logo";
 import CodeReviewRequestWrapper from "../CodeReviewRequestList/CodeReviewRequestWrapper";
 import NavbarMiddle from "../Navbar/NavbarMiddle";
+import FeedSection from "../Navbar/FeedSection";
 
 const MiddlePanel: React.FC = () => {
   const screenType = useScreenType();
@@ -30,19 +31,22 @@ const MiddlePanel: React.FC = () => {
 
     case SCREEN_COLUMNS_TYPE.fullscreen:
       topBar = (
-        <div
-          style={{
-            display: "grid",
-            maxWidth: "100%",
-            gridTemplateColumns: "10% 1fr 12%",
-            columnGap: 20,
-          }}
-          className="bg-primary-900"
-        >
-          <Logo />
-          <NavbarMiddle />
-          <Dropdown />
-        </div>
+        <>
+          <div
+            style={{
+              display: "grid",
+              maxWidth: "100%",
+              gridTemplateColumns: "10% 1fr 12%",
+              columnGap: 20,
+            }}
+            className="bg-primary-900"
+          >
+            <Logo />
+            <SearchBar />
+            <Dropdown />
+          </div>
+          <FeedSection />
+        </>
       );
       break;
   }

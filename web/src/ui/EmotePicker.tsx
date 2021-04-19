@@ -11,7 +11,8 @@ interface Props {
 const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
   const [emojis, setEmojis] = useState(customEmojis);
   const [text, setText] = useState("");
-  const [activeIndex, setActiveIndex] = useState(1);
+
+  console.log("rendered");
   const handleOnClickEmoji = (e) => {
     setNotes(`${notes} :${e.shortNames[0]}:`);
   };

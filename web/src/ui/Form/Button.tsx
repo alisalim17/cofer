@@ -33,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({
           width,
           height,
         }}
-        className={`common: focus:outline-no-chrome rounded-5 ${padding} primary: text-button bg-accent focus:bg-accent-hover hover:bg-accent-hover utils: flex justify-center items-center font-bold ${extraClassName}`}
+        className={`common: focus:outline-no-chrome rounded-5 focus:ring-4 ${padding} primary: text-button bg-accent focus:bg-accent-hover hover:bg-accent-hover utils: flex justify-center items-center font-bold ${extraClassName}`}
         disabled={loading}
         type="button"
         {...props}

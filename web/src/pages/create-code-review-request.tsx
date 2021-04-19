@@ -61,8 +61,10 @@ const CreateCodeReviewRequest = () => {
     if (res[res.length - 1]) setTags([...tags, res[res.length - 1].value]);
   };
 
-  const handleOnClickEmojiWrapper = () => {
-    setOpen(!open);
+  const handleOnClickEmojiWrapper = async () => {
+    console.log("open 1", open);
+    await setOpen(!open);
+    console.log("open 2", open);
   };
 
   const handleNotesOnChange = useDebouncedCallback((prevText, currText) => {
@@ -132,15 +134,30 @@ const CreateCodeReviewRequest = () => {
                 name="notes"
                 placeholder="your notes"
                 label="Notes"
-                wrapperClassName="flex"
+                wrapperClassName="flex relative"
               >
-                <button
-                  ref={buttonRef}
-                  onClick={handleOnClickEmojiWrapper}
-                  type="button"
-                >
-                  emoji
-                </button>
+                <div className="absolute bottom-0 right-1">
+                  <button
+                    ref={buttonRef}
+                    onClick={handleOnClickEmojiWrapper}
+                    type="button"
+                  >
+                    <svg
+                      className="w-5 h-5 text-primary-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </InputField>
               <Button
                 width={175}

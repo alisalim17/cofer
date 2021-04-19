@@ -11,7 +11,7 @@ const Logo = () => {
   const isShowText = screenType === SCREEN_COLUMNS_TYPE[3];
 
   return (
-    <div className={`flex ${isShowText ? "md:items-center" : null}`}>
+    <div className={`flex  ${isShowText ? "md:items-center" : ""}`}>
       <svg
         width="40"
         height="40"
