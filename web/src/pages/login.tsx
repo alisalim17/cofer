@@ -12,6 +12,7 @@ import Link from "../ui/utilities/Link";
 import Wrapper from "../ui/utilities/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+import FormFooter from "../ui/Form/FormFooter";
 
 interface FormValues {
   usernameOrEmail: string;
@@ -84,11 +85,9 @@ const Login = () => {
             </MyForm>
           )}
         </Formik>
-        <div className="flex justify-center">
-          <div className="text-primary-100 py-2 px-4 rounded-5 border-default border-primary-800 mt-4 text-sm">
-            New to Cofer? <Link href="/register">Create an account.</Link>
-          </div>
-        </div>
+        <FormFooter>
+          New to Cofer? <Link href="/register">Create an account.</Link>
+        </FormFooter>
       </Wrapper>
     </UnProtectedRoute>
   );

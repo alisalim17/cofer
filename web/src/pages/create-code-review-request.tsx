@@ -17,19 +17,11 @@ import Wrapper from "../ui/utilities/Wrapper";
 import { useClickOutside } from "../utils/hooks/useClickOutside";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
-
-function getDifference(a, b) {
-  let i = 0;
-  let j = 0;
-  let result = "";
-
-  while (j < b.length) {
-    if (a[i] !== b[j] || i === a.length) result += b[j];
-    else i += 1;
-    j += 1;
-  }
-  return result;
-}
+import { getDifference } from "../utils/hooks/useGetDiff";
+import { Smile } from "react-feather";
+import Link from "../ui/utilities/Link";
+import FormFooter from "../ui/Form/FormFooter";
+import Logo from "../ui/Navbar/Logo";
 
 interface FormValues {
   numDays: number;
@@ -61,17 +53,10 @@ const CreateCodeReviewRequest = () => {
     if (res[res.length - 1]) setTags([...tags, res[res.length - 1].value]);
   };
 
-  const handleOnClickEmojiWrapper = async () => {
-    console.log("open 1", open);
-    await setOpen(!open);
-    console.log("open 2", open);
-  };
+  const handleOnClickEmojiWrapper = async () => setOpen(!open);
 
   const handleNotesOnChange = useDebouncedCallback((prevText, currText) => {
-    console.log("fired");
-    if (getDifference(prevText, currText) === ":") {
-      setOpen(!open);
-    }
+    if (getDifference(prevText, currText) === ":") setOpen(!open);
   }, 1000);
 
   return (
@@ -97,6 +82,12 @@ const CreateCodeReviewRequest = () => {
         >
           {({ isSubmitting }) => (
             <MyForm width={500}>
+              <div className="flex justify-center mb-1">
+                <Link href="/">
+                  <Logo showText={false} />
+                </Link>
+              </div>
+
               <Header
                 centered
                 color="text-primary-100"
@@ -138,24 +129,15 @@ const CreateCodeReviewRequest = () => {
               >
                 <div className="absolute bottom-0 right-1">
                   <button
+                    style={{ padding: 3 }}
+                    className="focus:outline-no-chrome rounded-5 focus:ring-2"
                     ref={buttonRef}
                     onClick={handleOnClickEmojiWrapper}
                     type="button"
                   >
-                    <svg
-                      className="w-5 h-5 text-primary-200"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
+                    <Smile
+                      className={`${open ? "text-accent" : "text-primary-200"}`}
+                    />
                   </button>
                 </div>
               </InputField>

@@ -5,10 +5,14 @@ import {
   SCREEN_COLUMNS_TYPE,
 } from "../../utils/hooks/useScreenType";
 
-const Logo = () => {
+interface LogoProps {
+  showText?: boolean;
+}
+
+const Logo: React.FC<LogoProps> = ({ showText = true }) => {
   const screenType = useScreenType();
 
-  const isShowText = screenType === SCREEN_COLUMNS_TYPE[3];
+  const isShowText = !showText ? false : screenType === SCREEN_COLUMNS_TYPE[3];
 
   return (
     <div className={`flex  ${isShowText ? "md:items-center" : ""}`}>
