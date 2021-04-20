@@ -7,29 +7,28 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { getConnection } from "typeorm";
-import { CodeReviewRequest } from "../../../../entities/CodeReviewRequest";
+import { Review } from "../../../../entities/CodeReview";
 import { isAuth } from "../../../middlewares/isAuth";
 import { MyContext } from "../../../../types/MyContext";
 import { User } from "../../../../entities/User";
 
-@Resolver(CodeReviewRequest)
-export class CodeReviewRequestsResolver {
-  @Query(() => [CodeReviewRequest], { nullable: true })
+@Resolver(Review)
+export class CodeReviewResolver {
+  @Query(() => [Review], { nullable: true })
   @UseMiddleware(isAuth)
-  async codeReviewRequests(@Ctx() { req }: MyContext) {
+  async reviews(@Ctx() { req }: MyContext) {
     return getConnection().query(
       `
-      select * from code_review_request where "ownerId" = $1
-      `,
-      [req.session?.userId]
+      select * from review
+      `
     );
   }
 
   @FieldResolver(() => User)
-  async owner(@Root() root: CodeReviewRequest) {
+  async owner(@Root() root: Review) {
     console.log(root);
     const user = await User.findOne(root.ownerId);
-    console.log("user", user);
+
     if (user) return user;
 
     return {
@@ -39,7 +38,7 @@ export class CodeReviewRequestsResolver {
   }
 
   @FieldResolver(() => String)
-  notes(@Root() root: CodeReviewRequest) {
+  notes(@Root() root: Review) {
     return root.notes.slice(0, 150);
   }
 }

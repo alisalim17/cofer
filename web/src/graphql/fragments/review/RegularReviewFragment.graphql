@@ -1,4 +1,4 @@
-fragment RegularCodeReviewRequestFragment on CodeReviewRequest {
+fragment RegularReviewFragment on Review {
     id
     numDays
     codeUrl

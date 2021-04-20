@@ -1,5 +1,0 @@
-query CodeReviewRequests {
-  codeReviewRequests {
-       ...RegularCodeReviewRequestFragment
-  }
-}

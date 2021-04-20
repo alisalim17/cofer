@@ -5,7 +5,7 @@ import { User } from "../../../../entities/User";
 import { MyContext } from "../../../../types/MyContext";
 import { formatYupError } from "../../../../utils/formatYupError";
 import { errorMessages } from "../../../shared/registirationErrorMessages";
-import { RegisterInput } from "../../types/Input/RegisterInput";
+import { RegisterInput } from "../../types/Input/user/RegisterInput";
 import { RegisterResponse } from "../../types/Response/user/RegisterResponse";
 
 const schema = yup.object().shape({

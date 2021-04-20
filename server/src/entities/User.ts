@@ -6,7 +6,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { CodeReviewRequest } from "./CodeReviewRequest";
+import { Review } from "./CodeReview";
+import { Offer } from "./Offer";
 
 @ObjectType()
 @Entity()
@@ -26,6 +27,9 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @OneToMany(() => CodeReviewRequest, (crr) => crr.creator)
-  codeReviewRequests: CodeReviewRequest[];
+  @OneToMany(() => Review, (crr) => crr.owner)
+  codeReview: Review[];
+
+  @OneToMany(() => Offer, (offer) => offer.owner)
+  offers: Offer[];
 }

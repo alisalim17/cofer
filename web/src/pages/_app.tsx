@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import "tailwindcss/tailwind.css";
 import Head from "next/head";
 

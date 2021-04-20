@@ -2,8 +2,9 @@ import { Formik } from "formik";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef } from "react";
+import { Smile } from "react-feather";
 import { useDebouncedCallback } from "use-debounce";
-import { useCreateCodeReviewRequestMutation } from "../generated/graphql";
+import { useCreateReviewMutation } from "../generated/graphql";
 import { useCreateCodeRRStore } from "../stores/useCreateCodeRRStore";
 import { useEmojiPickerStore } from "../stores/useEmojiPickerStore";
 import EmotePicker from "../ui/EmotePicker";
@@ -12,16 +13,14 @@ import MultiSelectTags from "../ui/Form/MultiSelectTags";
 import MyForm from "../ui/Form/MyForm";
 import InputField from "../ui/Form/TextField/InputField";
 import Header from "../ui/Header";
+import Logo from "../ui/Navbar/Logo";
+import Link from "../ui/utilities/Link";
 import ProtectedRoute from "../ui/utilities/ProtectedRoute";
 import Wrapper from "../ui/utilities/Wrapper";
 import { useClickOutside } from "../utils/hooks/useClickOutside";
+import { getDifference } from "../utils/hooks/useGetDiff";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
-import { getDifference } from "../utils/hooks/useGetDiff";
-import { Smile } from "react-feather";
-import Link from "../ui/utilities/Link";
-import FormFooter from "../ui/Form/FormFooter";
-import Logo from "../ui/Navbar/Logo";
 
 interface FormValues {
   numDays: number;
@@ -34,7 +33,7 @@ const CreateCodeReviewRequest = () => {
   const { open, setOpen } = useEmojiPickerStore();
   const { notes, tags, setNotes, setTags } = useCreateCodeRRStore();
   const router = useRouter();
-  const [createCodeRR] = useCreateCodeReviewRequestMutation();
+  const [createCodeRR] = useCreateReviewMutation();
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
@@ -75,14 +74,14 @@ const CreateCodeReviewRequest = () => {
               },
             });
             console.log(res);
-            if (res.data?.createCodeReviewRequest.errors) {
-              setErrors(toErrorMap(res.data.createCodeReviewRequest.errors));
-            } else if (res.data?.createCodeReviewRequest.ok) router.push("/");
+            if (res.data?.createReview.errors) {
+              setErrors(toErrorMap(res.data?.createReview.errors));
+            } else if (res.data?.createReview.ok) router.push("/");
           }}
         >
           {({ isSubmitting }) => (
             <MyForm width={500}>
-              <div className="flex justify-center mb-1">
+              <div className="flex justify-center mb-2">
                 <Link href="/">
                   <Logo showText={false} />
                 </Link>

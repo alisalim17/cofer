@@ -1,7 +1,7 @@
 import { Field, InputType, Int } from "type-graphql";
 
 @InputType()
-export class CreateCodeReviewRequestInput {
+export class CreateReviewInput {
   @Field(() => Int, { nullable: true })
   numDays: number;
 

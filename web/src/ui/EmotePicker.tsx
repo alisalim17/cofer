@@ -12,9 +12,11 @@ const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
   const [emojis, setEmojis] = useState(customEmojis);
   const [text, setText] = useState("");
 
-  console.log("rendered");
   const handleOnClickEmoji = (e) => {
-    setNotes(`${notes} :${e.shortNames[0]}:`);
+    const addedEmoji = `${notes[notes.length - 1] === " " ? " " : ""}:${
+      e.shortNames[0]
+    }:`;
+    setNotes(`${notes}${addedEmoji}`);
   };
 
   const debouncedSearch = useDebouncedCallback((value) => {

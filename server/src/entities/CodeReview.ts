@@ -4,15 +4,16 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Offer } from "./Offer";
 import { User } from "./User";
 
 @ObjectType()
 @Entity()
-export class CodeReviewRequest extends BaseEntity {
+export class Review extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn("uuid")
   id!: string;
@@ -39,6 +40,9 @@ export class CodeReviewRequest extends BaseEntity {
   ownerId!: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.codeReviewRequests)
+  @ManyToOne(() => User, (user) => user.codeReview)
   owner!: Promise<User>;
+
+  @OneToMany(() => Offer, (offer) => offer.codeReview)
+  offers!: Promise<User>;
 }
