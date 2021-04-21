@@ -33,6 +33,10 @@ export class Offer extends BaseEntity {
 
   @Field(() => String)
   @PrimaryColumn({ type: "uuid" })
+  reviewOwnerId!: string;
+
+  @Field(() => String)
+  @PrimaryColumn({ type: "uuid" })
   reviewId!: string;
 
   @Field(() => User)

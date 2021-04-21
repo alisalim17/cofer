@@ -2,11 +2,13 @@ import { Field, Int, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Offer } from "./Offer";
 import { User } from "./User";
@@ -45,4 +47,10 @@ export class Review extends BaseEntity {
 
   @OneToMany(() => Offer, (offer) => offer.review)
   offers!: Promise<User>;
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }

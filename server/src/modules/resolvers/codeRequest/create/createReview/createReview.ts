@@ -4,7 +4,7 @@ import { Resolver, Mutation, UseMiddleware, Ctx, Arg } from "type-graphql";
 import { Review } from "../../../../../entities/Review";
 import { CreateReviewResponse } from "../../../types/Response/codeReview/CreateReviewResponse";
 import { isAuth } from "../../../../middlewares/isAuth";
-import { CreateReviewInput } from "../../../types/Input/codeReview/CreateReviewInput";
+import { CreateReviewInput } from "../../../types/Input/review/CreateReviewInput";
 import { MyContext } from "../../../../../types/MyContext";
 import { formatYupError } from "../../../../../utils/formatYupError";
 

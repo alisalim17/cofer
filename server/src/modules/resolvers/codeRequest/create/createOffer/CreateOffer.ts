@@ -2,13 +2,13 @@ import { CreateOfferResponse } from "../../../types/Response/codeReview/createOf
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { MyContext } from "../../../../../types/MyContext";
 import { isAuth } from "../../../../middlewares/isAuth";
-import { CreateOfferInput } from "../../../types/Input/codeReview/CreateOfferInput";
+import { CreateOfferInput } from "../../../types/Input/review/CreateOfferInput";
 import { Offer } from "../../../../../entities/Offer";
 import { errorMessages } from "../errorMessages";
 import * as yup from "yup";
 import { formatYupError } from "../../../../../utils/formatYupError";
 import { Review } from "../../../../../entities/Review";
-import { validateCreateOffer } from "./../../../validations/createOffer";
+import { validateCreateOffer } from "../../../validations/validateCreateOffer";
 
 const schema = yup.object().shape({
   codeUrl: yup
@@ -37,13 +37,13 @@ export class CreateOfferResolver {
       };
     }
 
-    const { res, valid } = await validateCreateOffer(input);
-    console.log(res, valid);
+    const { res, valid, review } = await validateCreateOffer(input);
     if (!valid) return res!;
 
     await Offer.create({
       ...input,
       ownerId: req.session.userId,
+      reviewOwnerId: review?.ownerId,
     }).save();
 
     return {

@@ -1,5 +1,5 @@
 import { Review } from "../../../entities/Review";
-import { CreateOfferInput } from "../types/Input/codeReview/CreateOfferInput";
+import { CreateOfferInput } from "../types/Input/review/CreateOfferInput";
 import { CreateOfferResponse } from "../types/Response/codeReview/createOfferResponse";
 
 type Result = CreateOfferResponse | undefined;
@@ -7,6 +7,7 @@ type Result = CreateOfferResponse | undefined;
 interface Response {
   valid: boolean;
   res: Result;
+  review?: Review;
 }
 
 export const validateCreateOffer = async (
@@ -17,9 +18,10 @@ export const validateCreateOffer = async (
   ];
 
   let res;
+  let review;
 
   try {
-    const review = await Review.findOne(input.reviewId);
+    review = await Review.findOne(input.reviewId);
     if (!review) {
       res = {
         ok: false,
@@ -37,5 +39,6 @@ export const validateCreateOffer = async (
   return {
     valid: res ? false : true,
     res,
+    review,
   };
 };

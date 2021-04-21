@@ -72,6 +72,9 @@ const CreateReview = () => {
               variables: {
                 input: { ...values, tags, notes },
               },
+              update: (cache) => {
+                cache.evict({ fieldName: "reviews" });
+              },
             });
             console.log(res);
             if (res.data?.createReview.errors) {

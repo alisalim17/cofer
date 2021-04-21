@@ -19,7 +19,7 @@ export class ReviewsResolver {
   async reviews(@Ctx() { req }: MyContext) {
     return getConnection().query(
       `
-      select * from review
+      select * from review order by "createdAt" DESC
       `
     );
   }
