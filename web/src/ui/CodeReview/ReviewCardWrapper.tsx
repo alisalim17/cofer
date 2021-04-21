@@ -1,9 +1,9 @@
 import React from "react";
 import { useMeQuery, useReviewsQuery } from "../../generated/graphql";
 import CenteredLoader from "../Loader/CenteredLoader";
-import CodeReviewRequest from "./CodeReviewRequest";
+import ReviewCard from "./ReviewCard";
 
-const CodeReviewRequestWrapper: React.FC = () => {
+const ReviewCardWrapper: React.FC = () => {
   const { loading, data } = useReviewsQuery();
   const { loading: meLoading, data: meData } = useMeQuery();
 
@@ -13,7 +13,7 @@ const CodeReviewRequestWrapper: React.FC = () => {
     <div className="flex flex-col space-y-8 pb-8">
       {data?.reviews?.length > 0 ? (
         data?.reviews.map((codeRR) => (
-          <CodeReviewRequest
+          <ReviewCard
             isOwner={meData?.me?.id === codeRR.ownerId}
             key={`code-rr-${codeRR.id}`}
             data={codeRR}
@@ -26,4 +26,4 @@ const CodeReviewRequestWrapper: React.FC = () => {
   );
 };
 
-export default CodeReviewRequestWrapper;
+export default ReviewCardWrapper;

@@ -1,0 +1,9 @@
+mutation CreateOffer($input: CreateOfferInput!) {
+  createOffer(input: $input) {
+    ok
+    errors {
+      field
+      message
+    }
+  }
+}

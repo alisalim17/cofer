@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { RegularCodeReviewRequestFragmentFragment } from "../../generated/graphql";
+import { MoreVertical } from "react-feather";
+import { RegularReviewFragmentFragment } from "../../generated/graphql";
+import Dropdown from "../Dropdown/Dropdown";
+import DropdownElement from "../Dropdown/DropdownElement";
 import Header from "../Header";
+import Icon from "../Icon";
 import Twemoji from "../Twemoji";
+import Link from "../utilities/Link";
 
 interface CodeReviewRequestProps {
-  data: RegularCodeReviewRequestFragmentFragment;
+  data: RegularReviewFragmentFragment;
   isOwner: boolean;
 }
 
-const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
+const ReviewCard: React.FC<CodeReviewRequestProps> = ({
   data: {
     id,
     owner: { username },
@@ -20,16 +25,31 @@ const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
 }) => {
   const [hover, setHover] = useState(false);
 
+  const dropdownElements = (
+    <div>
+      <DropdownElement>View Offers</DropdownElement>
+    </div>
+  );
+  const dropdownButton = (
+    <Icon>
+      <MoreVertical />
+    </Icon>
+  );
+
   return (
     <div
       onMouseEnter={() => setHover(!hover)}
       onMouseLeave={() => setHover(!hover)}
-      className="w-full bg-primary-800 hover:bg-primary-700 rounded-lg transition-colors duration-300 ease-in-out p-4 cursor-pointer"
+      className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out p-4 cursor-pointer"
     >
-      <Header size="2xl" fontWeight="bold">
-        {isOwner ? "you sent a review" : `${username} wants a review`}
-      </Header>
+      <div className="flex justify-between">
+        <Header size="2xl" fontWeight="bold">
+          {isOwner ? "you sent a review" : `${username} wants a review`}
+        </Header>
+        <Dropdown button={dropdownButton} elements={dropdownElements} />
+      </div>
       <span className="text-sm text-primary-300">in {numDays} days</span>
+
       <p className="mt-2 text-left break-all truncate whitespace-pre-wrap text-primary-200">
         <Twemoji text={notes} />
       </p>
@@ -53,13 +73,15 @@ const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
             </small>
           </div>
 
-          <div
-            className={`text-sm transition-colors duration-300 ease-in-out  ${
+          <Link
+            noColor
+            href={`/create-offer/${id}`}
+            extraClassName={`text-sm transition-colors duration-300 ease-in-out  ${
               hover ? "text-accent-hover" : "text-primary-100"
             }`}
           >
             Give Review
-          </div>
+          </Link>
         </div>
         <div className="flex space-x-2">
           {tags.map((t, i) => (
@@ -76,4 +98,4 @@ const CodeReviewRequest: React.FC<CodeReviewRequestProps> = ({
   );
 };
 
-export default CodeReviewRequest;
+export default ReviewCard;

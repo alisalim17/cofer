@@ -5,14 +5,17 @@ import {
   useScreenType,
   SCREEN_COLUMNS_TYPE,
 } from "../../utils/hooks/useScreenType";
-import Dropdown from "../Navbar/Dropdown";
+import Dropdown, { DropdownProps } from "../Dropdown/Dropdown";
 import Logo from "../Navbar/Logo";
-import CodeReviewRequestWrapper from "../CodeReviewRequestList/CodeReviewRequestWrapper";
+import ReviewCardWrapper from "../CodeReview/ReviewCardWrapper";
 import NavbarMiddle from "../Navbar/NavbarMiddle";
 import FeedSection from "../Navbar/FeedSection";
+import DropdownElement from "../Dropdown/DropdownElement";
+import { userDropdownProps } from "../shared/userDropdownProps";
 
 const MiddlePanel: React.FC = () => {
   const screenType = useScreenType();
+
   let topBar = (
     <>
       <NavbarMiddle />
@@ -24,7 +27,7 @@ const MiddlePanel: React.FC = () => {
       topBar = (
         <div style={{ display: "grid", gridTemplateColumns: "90% 1fr" }}>
           <NavbarMiddle />
-          <Dropdown />
+          <Dropdown {...userDropdownProps} />
         </div>
       );
       break;
@@ -43,7 +46,7 @@ const MiddlePanel: React.FC = () => {
           >
             <Logo />
             <SearchBar />
-            <Dropdown />
+            <Dropdown {...userDropdownProps} />
           </div>
           <FeedSection />
         </>
@@ -56,7 +59,7 @@ const MiddlePanel: React.FC = () => {
       <div style={{ top: "-1px" }} className="sticky  pt-5 bg-primary-900 z-20">
         {topBar}
       </div>
-      <CodeReviewRequestWrapper />
+      <ReviewCardWrapper />
     </div>
   );
 };

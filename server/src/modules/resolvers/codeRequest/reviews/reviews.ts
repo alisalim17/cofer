@@ -7,13 +7,13 @@ import {
   UseMiddleware,
 } from "type-graphql";
 import { getConnection } from "typeorm";
-import { Review } from "../../../../entities/CodeReview";
+import { Review } from "../../../../entities/Review";
 import { isAuth } from "../../../middlewares/isAuth";
 import { MyContext } from "../../../../types/MyContext";
 import { User } from "../../../../entities/User";
 
 @Resolver(Review)
-export class CodeReviewResolver {
+export class ReviewsResolver {
   @Query(() => [Review], { nullable: true })
   @UseMiddleware(isAuth)
   async reviews(@Ctx() { req }: MyContext) {

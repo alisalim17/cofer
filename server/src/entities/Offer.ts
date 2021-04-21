@@ -10,7 +10,7 @@ import {
   PrimaryColumn,
 } from "typeorm";
 import { User } from "./User";
-import { Review } from "./CodeReview";
+import { Review } from "./Review";
 
 @ObjectType()
 @Entity()
@@ -24,12 +24,16 @@ export class Offer extends BaseEntity {
   accepted!: boolean;
 
   @Field(() => String)
+  @Column({ type: "text" })
+  codeUrl!: string;
+
+  @Field(() => String)
   @PrimaryColumn({ type: "uuid" })
   ownerId!: string;
 
   @Field(() => String)
   @PrimaryColumn({ type: "uuid" })
-  codeReviewId!: string;
+  reviewId!: string;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.codeReview)
@@ -39,5 +43,5 @@ export class Offer extends BaseEntity {
   @Field(() => User)
   @ManyToOne(() => Review, (crr) => crr.offers)
   @JoinColumn({ name: "codeReviewId" })
-  codeReview!: Promise<Review>;
+  review!: Promise<Review>;
 }

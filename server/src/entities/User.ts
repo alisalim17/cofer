@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Review } from "./CodeReview";
+import { Review } from "./Review";
 import { Offer } from "./Offer";
 
 @ObjectType()

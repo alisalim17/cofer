@@ -14,7 +14,7 @@ const FeedSection = () => {
       >
         <div className="text-2xl">Your Feed:</div>
       </Header>
-      <Link href="/create-code-review">
+      <Link href="/create-review">
         <Button padding="py-2 px-5">New review</Button>
       </Link>
     </div>

@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { errorMessages } from "../errorMessages";
 import { Resolver, Mutation, UseMiddleware, Ctx, Arg } from "type-graphql";
-import { Review } from "../../../../../entities/CodeReview";
+import { Review } from "../../../../../entities/Review";
 import { CreateReviewResponse } from "../../../types/Response/codeReview/CreateReviewResponse";
 import { isAuth } from "../../../../middlewares/isAuth";
 import { CreateReviewInput } from "../../../types/Input/codeReview/CreateReviewInput";
@@ -38,13 +38,13 @@ export class CreateReviewResolver {
       };
     }
 
-    const codeReview = await Review.create({
+    const review = await Review.create({
       ...input,
       ownerId: req.session.userId,
     }).save();
     return {
       ok: true,
-      codeReview: codeReview,
+      review,
     };
   }
 }

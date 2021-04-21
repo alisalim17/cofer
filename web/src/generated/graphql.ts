@@ -15,8 +15,8 @@ export type Scalars = {
 };
 
 export type CreateOfferInput = {
-  userId: Scalars['String'];
-  codeReviewRequestId: Scalars['String'];
+  codeUrl: Scalars['String'];
+  reviewId: Scalars['String'];
 };
 
 export type CreateOfferResponse = {
@@ -131,6 +131,23 @@ export type RegularUserFragmentFragment = (
   & Pick<User, 'id' | 'username'>
 );
 
+export type CreateOfferMutationVariables = Exact<{
+  input: CreateOfferInput;
+}>;
+
+
+export type CreateOfferMutation = (
+  { __typename?: 'Mutation' }
+  & { createOffer: (
+    { __typename?: 'CreateOfferResponse' }
+    & Pick<CreateOfferResponse, 'ok'>
+    & { errors?: Maybe<Array<(
+      { __typename?: 'FieldError' }
+      & Pick<FieldError, 'field' | 'message'>
+    )>> }
+  ) }
+);
+
 export type CreateReviewMutationVariables = Exact<{
   input: CreateReviewInput;
 }>;
@@ -233,6 +250,43 @@ export const RegularUserFragmentFragmentDoc = gql`
   username
 }
     `;
+export const CreateOfferDocument = gql`
+    mutation CreateOffer($input: CreateOfferInput!) {
+  createOffer(input: $input) {
+    ok
+    errors {
+      field
+      message
+    }
+  }
+}
+    `;
+export type CreateOfferMutationFn = Apollo.MutationFunction<CreateOfferMutation, CreateOfferMutationVariables>;
+
+/**
+ * __useCreateOfferMutation__
+ *
+ * To run a mutation, you first call `useCreateOfferMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOfferMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOfferMutation, { data, loading, error }] = useCreateOfferMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateOfferMutation(baseOptions?: Apollo.MutationHookOptions<CreateOfferMutation, CreateOfferMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOfferMutation, CreateOfferMutationVariables>(CreateOfferDocument, options);
+      }
+export type CreateOfferMutationHookResult = ReturnType<typeof useCreateOfferMutation>;
+export type CreateOfferMutationResult = Apollo.MutationResult<CreateOfferMutation>;
+export type CreateOfferMutationOptions = Apollo.BaseMutationOptions<CreateOfferMutation, CreateOfferMutationVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: CreateReviewInput!) {
   createReview(input: $input) {

@@ -35,7 +35,7 @@ export class Review extends BaseEntity {
   notes: string;
 
   @Field(() => String)
-  @Column({ type: "text" })
+  @Column({ type: "uuid" })
   @Index()
   ownerId!: string;
 
@@ -43,6 +43,6 @@ export class Review extends BaseEntity {
   @ManyToOne(() => User, (user) => user.codeReview)
   owner!: Promise<User>;
 
-  @OneToMany(() => Offer, (offer) => offer.codeReview)
+  @OneToMany(() => Offer, (offer) => offer.review)
   offers!: Promise<User>;
 }

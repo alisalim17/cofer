@@ -33,6 +33,8 @@ p.bold {
   --color-primary-600: #323d4d;
   --color-primary-700: #242c37;
   --color-primary-800: #151a21;
+  --color-primary-850: #212B38
+  ;
   --color-primary-900: #0b0e11;
   --color-secondary-washed-out: #879eed;
   --color-secondary: #5575e7;
@@ -70,7 +72,6 @@ body,
   color: var(--color-button-text);
   height: 100%;
   width: 100%;
-  
 }
 
 ::-webkit-scrollbar {
@@ -127,11 +128,13 @@ html {
   width: 100%;
 }
 
-
-
 .emoji {
   display: inline-block;
   width: 20px;
   height: 20px;
   margin: 0 5px;
+}
+
+.icon:hover {
+background: rgba(0,0,0,0.3);
 }

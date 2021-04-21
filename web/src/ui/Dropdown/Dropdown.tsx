@@ -1,7 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, FC } from "react";
 import { useClickOutside } from "../../utils/hooks/useClickOutside";
 
-const Dropdown = () => {
+export interface DropdownProps {
+  button: any;
+  elements: any;
+}
+
+const Dropdown: React.FC<DropdownProps> = ({ button, elements }) => {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
@@ -25,13 +30,7 @@ const Dropdown = () => {
             type="button"
             className="focus:outline-no-chrome"
           >
-            <img
-              className="rounded-full"
-              width="40px"
-              height="40px"
-              src="https://avatars.githubusercontent.com/u/67149699?v=4"
-              alt="profile"
-            />
+            {button}
           </button>
         </div>
       </div>
@@ -43,15 +42,11 @@ const Dropdown = () => {
               ref={wrapperRef}
               style={{
                 width: 200,
-                height: 200,
+                minHeight: 100,
               }}
               className="bg-primary-800 rounded-8 border-default border-primary-700 overflow-hidden relative"
             >
-              {Array.from({ length: 5 }).map(() => (
-                <div className="px-4 py-2 cursor-pointer transition-colors duration-200 hover:bg-primary-700 font-semibold">
-                  Profile
-                </div>
-              ))}
+              {elements}
             </div>
           </div>
         </div>

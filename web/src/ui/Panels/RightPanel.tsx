@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Dropdown from "../Navbar/Dropdown";
+import Dropdown from "../Dropdown/Dropdown";
+import { userDropdownProps } from "../shared/userDropdownProps";
 
 const RightPanel: React.FC = () => {
   return (
     <div className="sticky top-0 h-screen pt-5">
-      <Dropdown />
+      <Dropdown {...userDropdownProps} />
       hello3
     </div>
   );

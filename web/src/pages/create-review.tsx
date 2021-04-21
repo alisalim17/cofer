@@ -29,7 +29,7 @@ interface FormValues {
   notes: string;
 }
 
-const CreateCodeReviewRequest = () => {
+const CreateReview = () => {
   const { open, setOpen } = useEmojiPickerStore();
   const { notes, tags, setNotes, setTags } = useCreateCodeRRStore();
   const router = useRouter();
@@ -158,4 +158,4 @@ const CreateCodeReviewRequest = () => {
   );
 };
 
-export default withApollo({ ssr: false })(CreateCodeReviewRequest);
+export default withApollo({ ssr: true })(CreateReview);
