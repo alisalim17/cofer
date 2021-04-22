@@ -27,7 +27,9 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
 
   const dropdownElements = (
     <div>
-      <DropdownElement>View Offers</DropdownElement>
+      <Link noColor href="/view/offers">
+        <DropdownElement>View Offers</DropdownElement>
+      </Link>
     </div>
   );
   const dropdownButton = (

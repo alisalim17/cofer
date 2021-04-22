@@ -79,11 +79,24 @@ export type MutationCreateOfferArgs = {
   input: CreateOfferInput;
 };
 
+export type Offer = {
+  __typename?: 'Offer';
+  id: Scalars['String'];
+  accepted: Scalars['Boolean'];
+  codeUrl: Scalars['String'];
+  ownerId: Scalars['String'];
+  reviewOwnerId: Scalars['String'];
+  reviewId: Scalars['String'];
+  owner: User;
+  review: User;
+};
+
 export type Query = {
   __typename?: 'Query';
   me?: Maybe<User>;
   allUsers?: Maybe<Array<User>>;
   reviews?: Maybe<Array<Review>>;
+  offers: Array<Offer>;
 };
 
 export type RegisterInput = {
@@ -206,6 +219,17 @@ export type RegisterMutation = (
       & RegularUserFragmentFragment
     )> }
   ) }
+);
+
+export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Unnamed_1_Query = (
+  { __typename?: 'Query' }
+  & { offers: Array<(
+    { __typename?: 'Offer' }
+    & Pick<Offer, 'id' | 'accepted' | 'codeUrl'>
+  )> }
 );
 
 export type ReviewsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -407,6 +431,42 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const Document = gql`
+    {
+  offers {
+    id
+    accepted
+    codeUrl
+  }
+}
+    `;
+
+/**
+ * __useQuery__
+ *
+ * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Query, QueryVariables>(Document, options);
+      }
+export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Query, QueryVariables>(Document, options);
+        }
+export type QueryHookResult = ReturnType<typeof useQuery>;
+export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
+export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
 export const ReviewsDocument = gql`
     query Reviews {
   reviews {

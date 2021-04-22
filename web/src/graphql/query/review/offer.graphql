@@ -1,0 +1,7 @@
+query {
+  offers {
+    id
+    accepted
+    codeUrl
+  }
+}

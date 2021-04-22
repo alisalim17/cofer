@@ -1,8 +1,9 @@
+import { v4 } from "uuid";
 import { DropdownProps } from "../Dropdown/Dropdown";
 import DropdownElement from "../Dropdown/DropdownElement";
 
 const dropdownElements = Array.from({ length: 5 }).map(() => (
-  <DropdownElement>Profile</DropdownElement>
+  <DropdownElement key={`dropdown-element-${v4()}`}>Profile</DropdownElement>
 ));
 const dropdownButton = (
   <img

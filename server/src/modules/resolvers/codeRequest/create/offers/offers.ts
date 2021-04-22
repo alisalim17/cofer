@@ -12,7 +12,7 @@ export class OffersResolver {
     const res = await getConnection().query(
       `
       select * from review cr join "offer" o on cr."id" = o."reviewId"
-      where cr."ownerId" = $1 or cr."ownerId" = $1 or cr."reviewOwnerId" = $1
+      where cr."ownerId" = $1 or o."ownerId" = $1 or o."reviewOwnerId" = $1
       `,
       [req.session?.userId]
     );

@@ -1,24 +1,29 @@
 /* eslint-disable default-case */
 import React from "react";
-import SearchBar from "../Navbar/SearchBar";
 import {
-  useScreenType,
   SCREEN_COLUMNS_TYPE,
+  useScreenType,
 } from "../../utils/hooks/useScreenType";
-import Dropdown, { DropdownProps } from "../Dropdown/Dropdown";
-import Logo from "../Navbar/Logo";
 import ReviewCardWrapper from "../CodeReview/ReviewCardWrapper";
-import NavbarMiddle from "../Navbar/NavbarMiddle";
-import FeedSection from "../Navbar/FeedSection";
-import DropdownElement from "../Dropdown/DropdownElement";
+import Dropdown from "../Dropdown/Dropdown";
+import Logo from "../Navbar/Logo";
 import { userDropdownProps } from "../shared/userDropdownProps";
 
-const MiddlePanel: React.FC = () => {
+interface MiddlePanelProps {
+  SearchBar: any;
+  BottomSection: any;
+}
+
+const MiddlePanel: React.FC<MiddlePanelProps> = ({
+  SearchBar,
+  BottomSection,
+}) => {
   const screenType = useScreenType();
 
   let topBar = (
     <>
-      <NavbarMiddle />
+      <SearchBar />
+      <BottomSection />
     </>
   );
 
@@ -26,8 +31,9 @@ const MiddlePanel: React.FC = () => {
     case SCREEN_COLUMNS_TYPE[1]:
       topBar = (
         <div style={{ display: "grid", gridTemplateColumns: "90% 1fr" }}>
-          <NavbarMiddle />
+          <SearchBar />
           <Dropdown {...userDropdownProps} />
+          <BottomSection />
         </div>
       );
       break;
@@ -48,7 +54,7 @@ const MiddlePanel: React.FC = () => {
             <SearchBar />
             <Dropdown {...userDropdownProps} />
           </div>
-          <FeedSection />
+          <BottomSection />
         </>
       );
       break;
