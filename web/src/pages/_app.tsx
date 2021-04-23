@@ -3,8 +3,11 @@ import "tailwindcss/tailwind.css";
 import Head from "next/head";
 
 import "../styles/globals.css";
+import { createPageProgressBar } from "../utils/createPageProgressBar";
 
 function MyApp({ Component, pageProps }) {
+  createPageProgressBar();
+
   return (
     <>
       <Head>

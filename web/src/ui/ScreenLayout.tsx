@@ -5,17 +5,19 @@ import {
   useScreenType,
 } from "../utils/hooks/useScreenType";
 
+export type IComponent = any;
+
 interface IPanels {
-  LeftPanel: FC;
-  MiddlePanel: FC;
-  MiddlePanelMain: FC;
-  RightPanel: FC;
+  LeftPanel: (props) => IComponent;
+  MiddlePanel: (props) => IComponent;
+  MiddlePanelMain: (props) => IComponent;
+  RightPanel: (props) => IComponent;
 }
 
 export interface ScreenLayoutProps {
   panels: IPanels;
-  SearchBar: any;
-  BottomSection: any;
+  SearchBar: IComponent;
+  BottomSection: IComponent;
 }
 
 interface Props extends ScreenLayoutProps {

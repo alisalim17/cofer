@@ -4,17 +4,14 @@ import LeftPanel from "../../ui/Panels/LeftPanel";
 import RightPanel from "../../ui/Panels/RightPanel";
 import ScreenLayout from "../../ui/ScreenLayout";
 import ProtectedRoute from "../../ui/utilities/ProtectedRoute";
-import {
-  SCREEN_COLUMNS_TYPE,
-  useScreenType,
-} from "../../utils/hooks/useScreenType";
+import { useScreenType } from "../../utils/hooks/useScreenType";
 import { withApollo } from "../../utils/withApollo";
 import CenteredLoader from "../../ui/Loader/CenteredLoader";
-import SearchBar from "../../ui/Navbar/SearchBar";
-import FeedSection from "../../ui/pages/Home/FeedSection";
+import FeedSection from "../../ui/pages/ViewOffers/FeedSection";
 import LayoutWrapper from "../../ui/LayoutWrapper";
 import MiddlePanel from "../../ui/Panels/MiddlePanel";
 import ReviewCardWrapper from "../../ui/CodeReview/ReviewCardWrapper";
+import SearchBar from "../../ui/pages/Home/SearchBar";
 
 const Offers = () => {
   const screenType = useScreenType();

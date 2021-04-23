@@ -2,7 +2,6 @@ import Head from "next/head";
 import React from "react";
 import LayoutWrapper from "../ui/LayoutWrapper";
 import FeedSection from "../ui/pages/Home/FeedSection";
-import SearchBar from "../ui/Navbar/SearchBar";
 import LeftPanel from "../ui/Panels/LeftPanel";
 import MiddlePanel from "../ui/Panels/MiddlePanel";
 import RightPanel from "../ui/Panels/RightPanel";
@@ -15,6 +14,7 @@ import { withApollo } from "../utils/withApollo";
 import ScreenLayout from "../ui/ScreenLayout";
 import CenteredLoader from "../ui/Loader/CenteredLoader";
 import ReviewCardWrapper from "../ui/CodeReview/ReviewCardWrapper";
+import SearchBar from "../ui/pages/Home/SearchBar";
 
 const Index = () => {
   const screenType = useScreenType();

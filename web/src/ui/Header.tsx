@@ -39,13 +39,13 @@ const Header: React.FC<HeaderProps> = ({
   extraClassName = "",
 }) => {
   return (
-    <div
-      className={`${color} ${sizeClassNames[size]} ${
+    <span
+      className={`flex items-center ${color} ${sizeClassNames[size]} ${
         fontWeightClassNames[fontWeight]
       } ${centered ? "text-center" : ""} ${extraClassName}`}
     >
       {children}
-    </div>
+    </span>
   );
 };
 

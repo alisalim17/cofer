@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { MoreVertical } from "react-feather";
 import { RegularReviewFragmentFragment } from "../../generated/graphql";
+import { useScreenType } from "../../utils/hooks/useScreenType";
 import Dropdown from "../Dropdown/Dropdown";
 import DropdownElement from "../Dropdown/DropdownElement";
 import Header from "../Header";
 import Icon from "../Icon";
 import Twemoji from "../Twemoji";
 import Link from "../utilities/Link";
+import { SCREEN_COLUMNS_TYPE } from "./../../utils/hooks/useScreenType";
+import Tag from "./Tag";
 
 interface CodeReviewRequestProps {
   data: RegularReviewFragmentFragment;
@@ -23,6 +26,7 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
   },
   isOwner,
 }) => {
+  const screenType = useScreenType();
   const [hover, setHover] = useState(false);
 
   const dropdownElements = (
@@ -38,14 +42,21 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
     </Icon>
   );
 
+  console.log(screenType);
+  const tagsCount = screenType === SCREEN_COLUMNS_TYPE.fullscreen ? 2 : 4;
+
+  const tagsBody = tags
+    .slice(0, tagsCount)
+    .map((t, i) => <Tag key={`${id}-tag-${i}`}>#{t}</Tag>);
+
   return (
     <div
       onMouseEnter={() => setHover(!hover)}
       onMouseLeave={() => setHover(!hover)}
-      className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out p-4 cursor-pointer"
+      className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out px-4 pt-3 pb-4 cursor-pointer"
     >
       <div className="flex justify-between">
-        <Header size="2xl" fontWeight="bold">
+        <Header size="lg" fontWeight="bold">
           {isOwner ? "you sent a review" : `${username} wants a review`}
         </Header>
         <Dropdown button={dropdownButton} elements={dropdownElements} />
@@ -57,10 +68,10 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
       </p>
       {/* @TODO MAKE THIS DIVIDER COMPONENT , MAKE WIDTH 20% IN MOBILE */}
       <div
-        style={{ height: 1 }}
-        className="my-2 bg-primary-300 rounded-5 w-1/6"
+        style={{ height: 1, width: 100 }}
+        className="my-3 bg-primary-300 rounded-5"
       />
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div className="flex space-x-2 items-center">
           <div className="flex items-center space-x-2">
             <img
@@ -85,16 +96,7 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
             Give Review
           </Link>
         </div>
-        <div className="flex space-x-2">
-          {tags.map((t, i) => (
-            <div
-              key={`${id}-tag-${i}`}
-              className="text-sm bg-primary-600 p-1 rounded-5"
-            >
-              #{t}
-            </div>
-          ))}
-        </div>
+        <div className="flex space-x-2 mt-2 sm:mt-0">{tagsBody}</div>
       </div>
     </div>
   );

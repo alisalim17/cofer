@@ -138,3 +138,7 @@ html {
 .icon:hover {
 background: rgba(0,0,0,0.3);
 }
+
+.bar-of-progress {
+  z-index: 50;
+}
