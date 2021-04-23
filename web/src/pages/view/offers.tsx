@@ -11,7 +11,7 @@ import {
 import { withApollo } from "../../utils/withApollo";
 import CenteredLoader from "../../ui/Loader/CenteredLoader";
 import SearchBar from "../../ui/Navbar/SearchBar";
-import FeedSection from "../../ui/Navbar/FeedSection";
+import FeedSection from "../../ui/pages/Home/FeedSection";
 import LayoutWrapper from "../../ui/LayoutWrapper";
 import MiddlePanel from "../../ui/Panels/MiddlePanel";
 import ReviewCardWrapper from "../../ui/CodeReview/ReviewCardWrapper";
