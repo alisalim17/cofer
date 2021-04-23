@@ -14,11 +14,19 @@ import {
 import { withApollo } from "../utils/withApollo";
 import ScreenLayout from "../ui/ScreenLayout";
 import CenteredLoader from "../ui/Loader/CenteredLoader";
+import ReviewCardWrapper from "../ui/CodeReview/ReviewCardWrapper";
 
 const Index = () => {
   const screenType = useScreenType();
 
   if (!screenType) return <CenteredLoader />;
+
+  const panels = {
+    LeftPanel,
+    MiddlePanel,
+    RightPanel,
+    MiddlePanelMain: ReviewCardWrapper,
+  };
 
   return (
     <ProtectedRoute>
@@ -29,9 +37,7 @@ const Index = () => {
         <ScreenLayout
           BottomSection={FeedSection}
           SearchBar={SearchBar}
-          LeftPanel={LeftPanel}
-          MiddlePanel={MiddlePanel}
-          RightPanel={RightPanel}
+          panels={panels}
           screenType={screenType}
         />
       </LayoutWrapper>

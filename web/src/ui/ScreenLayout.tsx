@@ -1,62 +1,3 @@
-// /* eslint-disable default-case */
-// import React from "react";
-// import {
-//   SCREEN_COLUMNS_TYPE,
-//   useScreenType,
-// } from "../utils/hooks/useScreenType";
-// import LeftPanel from "./Panels/LeftPanel";
-// import MiddlePanel from "./Panels/MiddlePanel";
-// import RightPanel from "./Panels/RightPanel";
-
-// interface Props {
-//   screenType: string;
-// }
-
-// const ScreenLayout: React.FC<Props> = () => {
-//   let middle = null;
-//   const screenType = useScreenType();
-//   switch (screenType) {
-//     case SCREEN_COLUMNS_TYPE[3]:
-//       middle = (
-//         <>
-//           <LeftPanel />
-//           <MiddlePanel />
-//           <RightPanel />
-//         </>
-//       );
-//       break;
-//     case SCREEN_COLUMNS_TYPE[2]:
-//       middle = (
-//         <>
-//           <LeftPanel />
-//           <MiddlePanel />
-//           <RightPanel />
-//         </>
-//       );
-//       break;
-
-//     case SCREEN_COLUMNS_TYPE[1]:
-//       middle = (
-//         <>
-//           <LeftPanel />
-//           <MiddlePanel />
-//         </>
-//       );
-//       break;
-
-//     case SCREEN_COLUMNS_TYPE.fullscreen:
-//       middle = (
-//         <>
-//           <MiddlePanel />
-//         </>
-//       );
-//       break;
-//   }
-//   return middle;
-// };
-
-// export default ScreenLayout;
-
 /* eslint-disable default-case */
 import React, { FC } from "react";
 import {
@@ -64,10 +5,15 @@ import {
   useScreenType,
 } from "../utils/hooks/useScreenType";
 
-export interface ScreenLayoutProps {
+interface IPanels {
   LeftPanel: FC;
   MiddlePanel: FC;
+  MiddlePanelMain: FC;
   RightPanel: FC;
+}
+
+export interface ScreenLayoutProps {
+  panels: IPanels;
   SearchBar: any;
   BottomSection: any;
 }
@@ -77,16 +23,16 @@ interface Props extends ScreenLayoutProps {
 }
 
 const ScreenLayout: React.FC<Props> = ({
-  LeftPanel,
-  MiddlePanel,
-  RightPanel,
+  panels: { LeftPanel, MiddlePanel, MiddlePanelMain, RightPanel },
   SearchBar,
   BottomSection,
 }) => {
   const middlePanelProps = {
     BottomSection,
     SearchBar,
+    MiddlePanelMain,
   };
+
   let middle = (
     <>
       <LeftPanel />

@@ -1,10 +1,9 @@
 /* eslint-disable default-case */
-import React from "react";
+import React, { FC } from "react";
 import {
-  SCREEN_COLUMNS_TYPE,
   useScreenType,
+  SCREEN_COLUMNS_TYPE,
 } from "../../utils/hooks/useScreenType";
-import ReviewCardWrapper from "../CodeReview/ReviewCardWrapper";
 import Dropdown from "../Dropdown/Dropdown";
 import Logo from "../Navbar/Logo";
 import { userDropdownProps } from "../shared/userDropdownProps";
@@ -12,11 +11,13 @@ import { userDropdownProps } from "../shared/userDropdownProps";
 interface MiddlePanelProps {
   SearchBar: any;
   BottomSection: any;
+  MiddlePanelMain: FC;
 }
 
 const MiddlePanel: React.FC<MiddlePanelProps> = ({
   SearchBar,
   BottomSection,
+  MiddlePanelMain,
 }) => {
   const screenType = useScreenType();
 
@@ -65,7 +66,7 @@ const MiddlePanel: React.FC<MiddlePanelProps> = ({
       <div style={{ top: "-1px" }} className="sticky  pt-5 bg-primary-900 z-20">
         {topBar}
       </div>
-      <ReviewCardWrapper />
+      <MiddlePanelMain />
     </div>
   );
 };
