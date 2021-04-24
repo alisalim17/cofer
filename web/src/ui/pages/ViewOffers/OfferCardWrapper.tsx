@@ -9,9 +9,8 @@ const OfferCardWrapper: React.FC<OfferCardWrapperProps> = () => {
   const { loading, data, variables } = useOffersQuery();
   if (loading) return <CenteredLoader />;
 
-  console.log(data, variables);
   return (
-    <div>
+    <div className="flex flex-col space-y-8 pb-8">
       {data?.offers.map((offer) => (
         <OfferCard key={`offer-${offer.id}`} offer={offer} />
       ))}

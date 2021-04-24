@@ -12,7 +12,7 @@ const ReviewCardWrapper: React.FC = () => {
   return (
     <div className="flex flex-col space-y-8 pb-8">
       {data?.reviews?.length > 0 ? (
-        [...data?.reviews, ...data?.reviews, ...data?.reviews].map((codeRR) => (
+        data?.reviews.map((codeRR) => (
           <ReviewCard
             isOwner={meData?.me?.id === codeRR.ownerId}
             key={`code-rr-${codeRR.id}`}

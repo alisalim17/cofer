@@ -13,7 +13,8 @@ const sizeClassNames = {
   "6xl": "text-6xl",
   "7xl": "text-7xl",
 };
-const fontWeightClassNames = {
+// TODO:put these into a new file
+export const fontWeightClassNames = {
   extraLight: "font-extralight",
   light: "font-light",
   normal: "font-normal",
@@ -22,9 +23,12 @@ const fontWeightClassNames = {
   bold: "font-bold",
 };
 
-interface HeaderProps {
-  size: keyof typeof sizeClassNames;
+export interface FontWeightProps {
   fontWeight: keyof typeof fontWeightClassNames;
+}
+
+interface HeaderProps extends FontWeightProps {
+  size: keyof typeof sizeClassNames;
   centered?: boolean;
   color?: string;
   extraClassName?: string;

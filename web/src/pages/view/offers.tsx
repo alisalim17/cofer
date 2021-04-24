@@ -16,7 +16,8 @@ import OfferCardWrapper from "../../ui/pages/ViewOffers/OfferCardWrapper";
 
 const Offers = () => {
   const screenType = useScreenType();
-  if (!screenType) return <CenteredLoader />;
+
+  if (!screenType) return null;
 
   const panels = {
     LeftPanel,

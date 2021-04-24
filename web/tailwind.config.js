@@ -71,6 +71,10 @@ module.exports = {
         DEFAULT: "var(--color-green)",
       },
     },
+    minWidth: {
+      0: "0",
+      full: "100%",
+    },
     spacing: {
       0: "0px",
       0.5: "3px",
@@ -115,6 +119,7 @@ module.exports = {
     backgroundColor: ({ after }) => after(["disabled"]),
     textColor: ({ after }) => after(["disabled"]),
     scrollbar: ["rounded", "dark"],
+    minWidth: ["responsive"],
   },
   plugins: [require("tailwind-scrollbar")],
 };
