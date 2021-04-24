@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { MoreVertical } from "react-feather";
-import { RegularReviewFragmentFragment } from "../../generated/graphql";
-import { useScreenType } from "../../utils/hooks/useScreenType";
-import Dropdown from "../Dropdown/Dropdown";
-import DropdownElement from "../Dropdown/DropdownElement";
-import Header from "../Header";
-import Icon from "../Icon";
-import Twemoji from "../Twemoji";
-import Link from "../utilities/Link";
-import { SCREEN_COLUMNS_TYPE } from "./../../utils/hooks/useScreenType";
+import { ExternalLink, MoreVertical } from "react-feather";
+import { RegularReviewSnippetFragment } from "../../../../generated/graphql";
+import {
+  SCREEN_COLUMNS_TYPE,
+  useScreenType,
+} from "../../../../utils/hooks/useScreenType";
+import Dropdown from "../../../Dropdown/Dropdown";
+import DropdownElement from "../../../Dropdown/DropdownElement";
+import Header from "../../../Header";
+import Icon from "../../../Icon";
+import Twemoji from "../../../Twemoji";
+import Link from "../../../utilities/Link";
+import CardDivider from "./CardDivider";
 import Tag from "./Tag";
 
 interface CodeReviewRequestProps {
-  data: RegularReviewFragmentFragment;
+  data: RegularReviewSnippetFragment;
   isOwner: boolean;
 }
 
@@ -23,6 +26,7 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
     numDays,
     notes,
     tags,
+    codeUrl,
   },
   isOwner,
 }) => {
@@ -42,7 +46,6 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
     </Icon>
   );
 
-  console.log(screenType);
   const tagsCount = screenType === SCREEN_COLUMNS_TYPE.fullscreen ? 2 : 4;
 
   const tagsBody = tags
@@ -53,24 +56,30 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
     <div
       onMouseEnter={() => setHover(!hover)}
       onMouseLeave={() => setHover(!hover)}
+      style={{ minHeight: 200 }}
       className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out px-4 pt-3 pb-4 cursor-pointer"
     >
       <div className="flex justify-between">
         <Header size="lg" fontWeight="bold">
-          {isOwner ? "you sent a review" : `${username} wants a review`}
+          <Link noColor target="_blank" href={codeUrl}>
+            {isOwner ? "you sent a review" : `${username} wants a review`}
+          </Link>
+          {hover ? <ExternalLink size={12} /> : null}
         </Header>
-        <Dropdown button={dropdownButton} elements={dropdownElements} />
+        <Dropdown
+          fixed={false}
+          button={dropdownButton}
+          elements={dropdownElements}
+        />
       </div>
       <span className="text-sm text-primary-300">in {numDays} days</span>
 
       <p className="mt-2 text-left break-all truncate whitespace-pre-wrap text-primary-200">
         <Twemoji text={notes} />
       </p>
-      {/* @TODO MAKE THIS DIVIDER COMPONENT , MAKE WIDTH 20% IN MOBILE */}
-      <div
-        style={{ height: 1, width: 100 }}
-        className="my-3 bg-primary-300 rounded-5"
-      />
+
+      <CardDivider />
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div className="flex space-x-2 items-center">
           <div className="flex items-center space-x-2">
@@ -89,11 +98,9 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
           <Link
             noColor
             href={`/create-offer/${id}`}
-            extraClassName={`text-sm transition-colors duration-300 ease-in-out  ${
-              hover ? "text-accent-hover" : "text-primary-100"
-            }`}
+            extraClassName="text-sm transition-colors duration-300 ease-in-out text-primary-100"
           >
-            Give Review
+            Give Offer
           </Link>
         </div>
         <div className="flex space-x-2 mt-2 sm:mt-0">{tagsBody}</div>

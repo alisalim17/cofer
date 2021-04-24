@@ -52,11 +52,17 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createOffer: CreateOfferResponse;
   createReview: CreateReviewResponse;
   login: RegisterResponse;
   logout: Scalars['Boolean'];
   register: RegisterResponse;
-  createOffer: CreateOfferResponse;
+  updateOfferStatus?: Maybe<Offer>;
+};
+
+
+export type MutationCreateOfferArgs = {
+  input: CreateOfferInput;
 };
 
 
@@ -75,14 +81,14 @@ export type MutationRegisterArgs = {
 };
 
 
-export type MutationCreateOfferArgs = {
-  input: CreateOfferInput;
+export type MutationUpdateOfferStatusArgs = {
+  input: UpdateOfferStatusInput;
 };
 
 export type Offer = {
   __typename?: 'Offer';
   id: Scalars['String'];
-  accepted: Scalars['Boolean'];
+  status: Scalars['String'];
   codeUrl: Scalars['String'];
   ownerId: Scalars['String'];
   reviewOwnerId: Scalars['String'];
@@ -93,10 +99,10 @@ export type Offer = {
 
 export type Query = {
   __typename?: 'Query';
-  me?: Maybe<User>;
-  allUsers?: Maybe<Array<User>>;
   reviews?: Maybe<Array<Review>>;
   offers: Array<Offer>;
+  me?: Maybe<User>;
+  allUsers?: Maybe<Array<User>>;
 };
 
 export type RegisterInput = {
@@ -123,6 +129,11 @@ export type Review = {
   owner: User;
 };
 
+export type UpdateOfferStatusInput = {
+  reviewId: Scalars['String'];
+  value: Scalars['Int'];
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['String'];
@@ -130,7 +141,12 @@ export type User = {
   email: Scalars['String'];
 };
 
-export type RegularReviewFragmentFragment = (
+export type RegularOfferSnippetFragment = (
+  { __typename?: 'Offer' }
+  & Pick<Offer, 'id' | 'status' | 'codeUrl' | 'reviewId'>
+);
+
+export type RegularReviewSnippetFragment = (
   { __typename?: 'Review' }
   & Pick<Review, 'id' | 'numDays' | 'codeUrl' | 'tags' | 'notes' | 'ownerId'>
   & { owner: (
@@ -139,7 +155,7 @@ export type RegularReviewFragmentFragment = (
   ) }
 );
 
-export type RegularUserFragmentFragment = (
+export type RegularUserSnippetFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id' | 'username'>
 );
@@ -159,6 +175,19 @@ export type CreateOfferMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>> }
   ) }
+);
+
+export type UpdateOfferStatusMutationVariables = Exact<{
+  input: UpdateOfferStatusInput;
+}>;
+
+
+export type UpdateOfferStatusMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOfferStatus?: Maybe<(
+    { __typename?: 'Offer' }
+    & RegularOfferSnippetFragment
+  )> }
 );
 
 export type CreateReviewMutationVariables = Exact<{
@@ -196,7 +225,7 @@ export type LoginMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>>, user?: Maybe<(
       { __typename?: 'User' }
-      & RegularUserFragmentFragment
+      & RegularUserSnippetFragment
     )> }
   ) }
 );
@@ -216,19 +245,23 @@ export type RegisterMutation = (
       & Pick<FieldError, 'field' | 'message'>
     )>>, user?: Maybe<(
       { __typename?: 'User' }
-      & RegularUserFragmentFragment
+      & RegularUserSnippetFragment
     )> }
   ) }
 );
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type OffersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = (
+export type OffersQuery = (
   { __typename?: 'Query' }
   & { offers: Array<(
     { __typename?: 'Offer' }
-    & Pick<Offer, 'id' | 'accepted' | 'codeUrl'>
+    & { owner: (
+      { __typename?: 'User' }
+      & RegularUserSnippetFragment
+    ) }
+    & RegularOfferSnippetFragment
   )> }
 );
 
@@ -239,7 +272,7 @@ export type ReviewsQuery = (
   { __typename?: 'Query' }
   & { reviews?: Maybe<Array<(
     { __typename?: 'Review' }
-    & RegularReviewFragmentFragment
+    & RegularReviewSnippetFragment
   )>> }
 );
 
@@ -250,12 +283,20 @@ export type MeQuery = (
   { __typename?: 'Query' }
   & { me?: Maybe<(
     { __typename?: 'User' }
-    & RegularUserFragmentFragment
+    & RegularUserSnippetFragment
   )> }
 );
 
-export const RegularReviewFragmentFragmentDoc = gql`
-    fragment RegularReviewFragment on Review {
+export const RegularOfferSnippetFragmentDoc = gql`
+    fragment RegularOfferSnippet on Offer {
+  id
+  status
+  codeUrl
+  reviewId
+}
+    `;
+export const RegularReviewSnippetFragmentDoc = gql`
+    fragment RegularReviewSnippet on Review {
   id
   numDays
   codeUrl
@@ -268,8 +309,8 @@ export const RegularReviewFragmentFragmentDoc = gql`
   }
 }
     `;
-export const RegularUserFragmentFragmentDoc = gql`
-    fragment RegularUserFragment on User {
+export const RegularUserSnippetFragmentDoc = gql`
+    fragment RegularUserSnippet on User {
   id
   username
 }
@@ -311,6 +352,39 @@ export function useCreateOfferMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOfferMutationHookResult = ReturnType<typeof useCreateOfferMutation>;
 export type CreateOfferMutationResult = Apollo.MutationResult<CreateOfferMutation>;
 export type CreateOfferMutationOptions = Apollo.BaseMutationOptions<CreateOfferMutation, CreateOfferMutationVariables>;
+export const UpdateOfferStatusDocument = gql`
+    mutation updateOfferStatus($input: UpdateOfferStatusInput!) {
+  updateOfferStatus(input: $input) {
+    ...RegularOfferSnippet
+  }
+}
+    ${RegularOfferSnippetFragmentDoc}`;
+export type UpdateOfferStatusMutationFn = Apollo.MutationFunction<UpdateOfferStatusMutation, UpdateOfferStatusMutationVariables>;
+
+/**
+ * __useUpdateOfferStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateOfferStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOfferStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateOfferStatusMutation, { data, loading, error }] = useUpdateOfferStatusMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateOfferStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOfferStatusMutation, UpdateOfferStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateOfferStatusMutation, UpdateOfferStatusMutationVariables>(UpdateOfferStatusDocument, options);
+      }
+export type UpdateOfferStatusMutationHookResult = ReturnType<typeof useUpdateOfferStatusMutation>;
+export type UpdateOfferStatusMutationResult = Apollo.MutationResult<UpdateOfferStatusMutation>;
+export type UpdateOfferStatusMutationOptions = Apollo.BaseMutationOptions<UpdateOfferStatusMutation, UpdateOfferStatusMutationVariables>;
 export const CreateReviewDocument = gql`
     mutation CreateReview($input: CreateReviewInput!) {
   createReview(input: $input) {
@@ -360,11 +434,11 @@ export const LoginDocument = gql`
       message
     }
     user {
-      ...RegularUserFragment
+      ...RegularUserSnippet
     }
   }
 }
-    ${RegularUserFragmentFragmentDoc}`;
+    ${RegularUserSnippetFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
@@ -400,11 +474,11 @@ export const RegisterDocument = gql`
       message
     }
     user {
-      ...RegularUserFragment
+      ...RegularUserSnippet
     }
   }
 }
-    ${RegularUserFragmentFragmentDoc}`;
+    ${RegularUserSnippetFragmentDoc}`;
 export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
 
 /**
@@ -431,49 +505,51 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
-export const Document = gql`
-    {
+export const OffersDocument = gql`
+    query Offers {
   offers {
-    id
-    accepted
-    codeUrl
+    ...RegularOfferSnippet
+    owner {
+      ...RegularUserSnippet
+    }
   }
 }
-    `;
+    ${RegularOfferSnippetFragmentDoc}
+${RegularUserSnippetFragmentDoc}`;
 
 /**
- * __useQuery__
+ * __useOffersQuery__
  *
- * To run a query within a React component, call `useQuery` and pass it any options that fit your needs.
- * When your component renders, `useQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useOffersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOffersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQuery({
+ * const { data, loading, error } = useOffersQuery({
  *   variables: {
  *   },
  * });
  */
-export function useQuery(baseOptions?: Apollo.QueryHookOptions<Query, QueryVariables>) {
+export function useOffersQuery(baseOptions?: Apollo.QueryHookOptions<OffersQuery, OffersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<Query, QueryVariables>(Document, options);
+        return Apollo.useQuery<OffersQuery, OffersQueryVariables>(OffersDocument, options);
       }
-export function useLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Query, QueryVariables>) {
+export function useOffersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<OffersQuery, OffersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<Query, QueryVariables>(Document, options);
+          return Apollo.useLazyQuery<OffersQuery, OffersQueryVariables>(OffersDocument, options);
         }
-export type QueryHookResult = ReturnType<typeof useQuery>;
-export type LazyQueryHookResult = ReturnType<typeof useLazyQuery>;
-export type QueryResult = Apollo.QueryResult<Query, QueryVariables>;
+export type OffersQueryHookResult = ReturnType<typeof useOffersQuery>;
+export type OffersLazyQueryHookResult = ReturnType<typeof useOffersLazyQuery>;
+export type OffersQueryResult = Apollo.QueryResult<OffersQuery, OffersQueryVariables>;
 export const ReviewsDocument = gql`
     query Reviews {
   reviews {
-    ...RegularReviewFragment
+    ...RegularReviewSnippet
   }
 }
-    ${RegularReviewFragmentFragmentDoc}`;
+    ${RegularReviewSnippetFragmentDoc}`;
 
 /**
  * __useReviewsQuery__
@@ -504,10 +580,10 @@ export type ReviewsQueryResult = Apollo.QueryResult<ReviewsQuery, ReviewsQueryVa
 export const MeDocument = gql`
     query Me {
   me {
-    ...RegularUserFragment
+    ...RegularUserSnippet
   }
 }
-    ${RegularUserFragmentFragmentDoc}`;
+    ${RegularUserSnippetFragmentDoc}`;
 
 /**
  * __useMeQuery__

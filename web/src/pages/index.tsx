@@ -13,7 +13,7 @@ import {
 import { withApollo } from "../utils/withApollo";
 import ScreenLayout from "../ui/ScreenLayout";
 import CenteredLoader from "../ui/Loader/CenteredLoader";
-import ReviewCardWrapper from "../ui/CodeReview/ReviewCardWrapper";
+import ReviewCardWrapper from "../ui/pages/Home/CodeReview/ReviewCardWrapper";
 import SearchBar from "../ui/pages/Home/SearchBar";
 
 const Index = () => {

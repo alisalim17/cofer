@@ -1,0 +1,8 @@
+query Offers{
+  offers {
+    ...RegularOfferSnippet
+    owner {
+      ...RegularUserSnippet
+    }
+  }
+}

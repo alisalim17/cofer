@@ -1,0 +1,6 @@
+fragment RegularOfferSnippet on Offer {
+    id
+    status
+    codeUrl
+    reviewId
+}

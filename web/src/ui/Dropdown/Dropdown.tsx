@@ -4,9 +4,14 @@ import { useClickOutside } from "../../utils/hooks/useClickOutside";
 export interface DropdownProps {
   button: any;
   elements: any;
+  fixed?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ button, elements }) => {
+const Dropdown: React.FC<DropdownProps> = ({
+  button,
+  elements,
+  fixed = true,
+}) => {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
@@ -36,8 +41,10 @@ const Dropdown: React.FC<DropdownProps> = ({ button, elements }) => {
       </div>
 
       {open ? (
-        <div className="z-20 absolute right-3 md:right-0">
-          <div className="fixed transform -translate-x-full">
+        <div className="absolute right-3 md:right-0">
+          <div
+            className={`${fixed ? "fixed transform -translate-x-full" : ""}`}
+          >
             <div
               ref={wrapperRef}
               style={{

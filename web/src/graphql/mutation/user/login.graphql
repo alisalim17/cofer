@@ -6,7 +6,7 @@ mutation Login($input: LoginInput!) {
       message
     }
     user {
-      ...RegularUserFragment
+      ...RegularUserSnippet
     }
   }
 }

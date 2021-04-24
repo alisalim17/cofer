@@ -1,44 +1,44 @@
-import { Field, Int, ObjectType } from "type-graphql";
+import { Field, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
   Entity,
-  Index,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
 import { Review } from "./Review";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
 export class Offer extends BaseEntity {
-  @Field(() => String)
+  @Field()
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Field(() => Boolean)
-  @Column({ type: "boolean", default: false })
-  accepted!: boolean;
+  @Field()
+  @Column({ type: "text", default: "inprogress" })
+  status!: string;
 
-  @Field(() => String)
+  @Field()
   @Column({ type: "text" })
   codeUrl!: string;
 
-  @Field(() => String)
+  @Field()
   @PrimaryColumn({ type: "uuid" })
   ownerId!: string;
 
-  @Field(() => String)
+  @Field()
   @PrimaryColumn({ type: "uuid" })
   reviewOwnerId!: string;
 
-  @Field(() => String)
+  @Field()
   @PrimaryColumn({ type: "uuid" })
   reviewId!: string;
 
+  // Owner of the offer
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.codeReview)
   @JoinColumn({ name: "ownerId" })

@@ -41,4 +41,9 @@ export class ReviewsResolver {
   notes(@Root() root: Review) {
     return root.notes.slice(0, 150);
   }
+
+  @FieldResolver(() => String)
+  tags(@Root() root: Review) {
+    return root.tags.slice(0, 4);
+  }
 }

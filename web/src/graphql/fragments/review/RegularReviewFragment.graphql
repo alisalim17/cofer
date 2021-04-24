@@ -1,4 +1,4 @@
-fragment RegularReviewFragment on Review {
+fragment RegularReviewSnippet on Review {
     id
     numDays
     codeUrl

@@ -33,15 +33,15 @@ p.bold {
   --color-primary-600: #323d4d;
   --color-primary-700: #242c37;
   --color-primary-800: #151a21;
-  --color-primary-850: #212B38
-  ;
+  --color-primary-850: #212B38;
   --color-primary-900: #0b0e11;
   --color-secondary-washed-out: #879eed;
   --color-secondary: #5575e7;
   --color-accent-glow: rgba(253, 77, 77, 0.3);
   --color-accent: #fd4d4d;
+  --color-green: #38a169;
   --color-accent-hover: #fd6868;
-  --color-accent-disabled: #f5bfbf;
+  --color-accent-disabled: #f5bfbf; 
 }
 
 h1 {
@@ -136,7 +136,7 @@ html {
 }
 
 .icon:hover {
-background: rgba(0,0,0,0.3);
+ background: rgba(0,0,0,0.3);
 }
 
 .bar-of-progress {

@@ -1,0 +1,5 @@
+mutation updateOfferStatus($input:UpdateOfferStatusInput!) {
+   updateOfferStatus(input:$input){
+    ...RegularOfferSnippet
+   }
+}

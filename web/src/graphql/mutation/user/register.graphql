@@ -6,7 +6,7 @@ mutation Register($input: RegisterInput!) {
       message
     }
     user {
-      ...RegularUserFragment
+      ...RegularUserSnippet
     }
   }
 }

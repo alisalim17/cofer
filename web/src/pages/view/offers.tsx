@@ -10,8 +10,9 @@ import CenteredLoader from "../../ui/Loader/CenteredLoader";
 import FeedSection from "../../ui/pages/ViewOffers/FeedSection";
 import LayoutWrapper from "../../ui/LayoutWrapper";
 import MiddlePanel from "../../ui/Panels/MiddlePanel";
-import ReviewCardWrapper from "../../ui/CodeReview/ReviewCardWrapper";
+import ReviewCardWrapper from "../../ui/pages/Home/CodeReview/ReviewCardWrapper";
 import SearchBar from "../../ui/pages/Home/SearchBar";
+import OfferCardWrapper from "../../ui/pages/ViewOffers/OfferCardWrapper";
 
 const Offers = () => {
   const screenType = useScreenType();
@@ -21,7 +22,7 @@ const Offers = () => {
     LeftPanel,
     MiddlePanel,
     RightPanel,
-    MiddlePanelMain: ReviewCardWrapper,
+    MiddlePanelMain: OfferCardWrapper,
   };
 
   return (

@@ -1,4 +1,4 @@
-fragment RegularUserFragment on User {
+fragment RegularUserSnippet on User {
       id 
       username
 }

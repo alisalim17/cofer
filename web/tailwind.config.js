@@ -67,6 +67,9 @@ module.exports = {
         hover: "var(--color-accent-hover)",
         disabled: "var(--color-accent-disabled)",
       },
+      green: {
+        DEFAULT: "var(--color-green)",
+      },
     },
     spacing: {
       0: "0px",
@@ -86,6 +89,7 @@ module.exports = {
       400: "400px",
     },
     borderWidth: {
+      none: "0px",
       default: "1px",
     },
     translate: (theme, { negative }) => ({

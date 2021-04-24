@@ -1,5 +1,5 @@
 query Reviews {
   reviews {
-       ...RegularReviewFragment
+       ...RegularReviewSnippet
   }
 }
