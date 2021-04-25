@@ -13,9 +13,7 @@ const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
   const [text, setText] = useState("");
 
   const handleOnClickEmoji = (e) => {
-    const addedEmoji = `${notes[notes.length - 1] === " " ? " " : ""}:${
-      e.shortNames[0]
-    }:`;
+    const addedEmoji = ` :${e.shortNames[0]}:`;
     setNotes(`${notes}${addedEmoji}`);
   };
 
@@ -40,6 +38,7 @@ const EmotePicker: React.FC<Props> = ({ notes, setNotes }) => {
         style={{
           height: 200,
           width: 350,
+          maxWidth: "100%",
           transform: "translateY(-100%)",
         }}
         className="absolute bg-primary-700 overflow-y-auto"

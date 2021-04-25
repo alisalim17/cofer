@@ -60,7 +60,7 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
       className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out px-4 pt-3 pb-4 cursor-pointer"
     >
       <div className="flex justify-between">
-        <Header size="lg" fontWeight="bold">
+        <Header headerType="h2" size="lg" fontWeight="bold">
           <Link noColor target="_blank" href={codeUrl}>
             {isOwner ? "you sent a review" : `${username} wants a review`}
           </Link>

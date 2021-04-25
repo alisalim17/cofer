@@ -7,13 +7,13 @@ import {
 } from "../../utils/hooks/useScreenType";
 
 interface LogoProps {
-  showText?: boolean;
+  showTextDefault?: boolean;
 }
 
-const Logo: React.FC<LogoProps> = ({ showText = true }) => {
+const Logo: React.FC<LogoProps> = ({ showTextDefault = false }) => {
   const screenType = useScreenType();
 
-  const isShowText = showText || screenType === SCREEN_COLUMNS_TYPE[3];
+  const isShowText = showTextDefault || screenType === SCREEN_COLUMNS_TYPE[3];
 
   return (
     <Link noColor href="/">

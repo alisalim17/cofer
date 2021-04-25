@@ -33,11 +33,10 @@ const Button: React.FC<ButtonProps> = ({
   variant,
   block = true,
   ring = "focus:ring-4",
-  fontWeight,
+  fontWeight = "normal",
   children,
   ...props
 }) => {
-  console.log("style", styles.variants[variant]);
   return (
     <div
       className={`${centered ? "flex justify-center" : ""} ${

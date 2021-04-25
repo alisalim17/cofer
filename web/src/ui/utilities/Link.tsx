@@ -8,7 +8,7 @@ type LinkProps = NextLinkProps & {
 };
 const Link: React.FC<LinkProps> = ({
   children,
-  extraClassName,
+  extraClassName = "",
   target,
   noColor = false,
   ...props

@@ -9,6 +9,7 @@ import { useCreateCodeRRStore } from "../stores/useCreateCodeRRStore";
 import { useEmojiPickerStore } from "../stores/useEmojiPickerStore";
 import EmotePicker from "../ui/EmotePicker";
 import Button from "../ui/Form/Button";
+import FormWrapper from "../ui/Form/FormWrapper";
 import MultiSelectTags from "../ui/Form/MultiSelectTags";
 import MyForm from "../ui/Form/MyForm";
 import InputField from "../ui/Form/TextField/InputField";
@@ -21,6 +22,7 @@ import { useClickOutside } from "../utils/hooks/useClickOutside";
 import { getDifference } from "../utils/hooks/useGetDiff";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+import { IFormFooterLink } from "./../ui/Form/FormWrapper";
 
 interface FormValues {
   numDays: number;
@@ -28,6 +30,17 @@ interface FormValues {
   tags: string[];
   notes: string;
 }
+
+const footerLinks: IFormFooterLink[] = [
+  {
+    href: "/",
+    text: "Home",
+  },
+  {
+    href: "/",
+    text: "Home",
+  },
+];
 
 const CreateReview = () => {
   const { open, setOpen } = useEmojiPickerStore();
@@ -38,14 +51,13 @@ const CreateReview = () => {
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
 
+  const handleClick = (e) => {
+    useClickOutside(wrapperRef, buttonRef, e.target, setOpen);
+  };
+
   useEffect(() => {
-    const handleClick = (e) => {
-      useClickOutside(wrapperRef, buttonRef, e.target, setOpen);
-    };
     document.addEventListener("mousedown", handleClick);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-    };
+    return () => document.removeEventListener("mousedown", handleClick);
   });
 
   const handleOnChangeSelect = (res) => {
@@ -63,11 +75,10 @@ const CreateReview = () => {
       <Head>
         <title>Create Code Review Request | Cofer</title>
       </Head>
-      <Wrapper extraClassName="flex flex-col justify-center" mobileFull>
+      <FormWrapper footerLinks={footerLinks}>
         <Formik<FormValues>
           initialValues={{ numDays: 3, codeUrl: "", tags: [], notes: "" }}
           onSubmit={async (values, { setErrors }) => {
-            console.log(tags);
             const res = await createCodeRR({
               variables: {
                 input: { ...values, tags, notes },
@@ -76,7 +87,6 @@ const CreateReview = () => {
                 cache.evict({ fieldName: "reviews" });
               },
             });
-            console.log(res);
             if (res.data?.createReview.errors) {
               setErrors(toErrorMap(res.data?.createReview.errors));
             } else if (res.data?.createReview.ok) router.push("/");
@@ -84,13 +94,8 @@ const CreateReview = () => {
         >
           {({ isSubmitting }) => (
             <MyForm width={500}>
-              <div className="flex justify-center mb-2">
-                <Link href="/">
-                  <Logo showText={false} />
-                </Link>
-              </div>
-
               <Header
+                headerType="h1"
                 centered
                 color="text-primary-100"
                 size="3xl"
@@ -144,6 +149,7 @@ const CreateReview = () => {
                 </div>
               </InputField>
               <Button
+                variant="primary"
                 width={175}
                 height={40}
                 extraClassName="mt-4"
@@ -156,7 +162,7 @@ const CreateReview = () => {
             </MyForm>
           )}
         </Formik>
-      </Wrapper>
+      </FormWrapper>
     </ProtectedRoute>
   );
 };

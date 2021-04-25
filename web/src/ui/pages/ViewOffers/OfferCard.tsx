@@ -99,7 +99,7 @@ const OfferCard: React.FunctionComponent<OfferCardProps> = ({
 
   return (
     <div className="w-full bg-primary-800 hover:bg-primary-850 rounded-lg transition-colors duration-300 ease-in-out px-4 pt-3 pb-4 cursor-pointer">
-      <Header fontWeight="bold" size="2xl">
+      <Header headerType="h2" fontWeight="bold" size="2xl">
         {username}
       </Header>
       <Link href={codeUrl} target="_blank">

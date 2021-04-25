@@ -24,7 +24,7 @@ export const fontWeightClassNames = {
 };
 
 export interface FontWeightProps {
-  fontWeight: keyof typeof fontWeightClassNames;
+  fontWeight?: keyof typeof fontWeightClassNames;
 }
 
 interface HeaderProps extends FontWeightProps {
@@ -38,7 +38,7 @@ interface HeaderProps extends FontWeightProps {
 const Header: React.FC<HeaderProps> = ({
   children,
   size,
-  fontWeight,
+  fontWeight = "normal",
   centered,
   color = "text-button",
   extraClassName = "",

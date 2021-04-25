@@ -36,8 +36,13 @@ const FormWrapper: React.FC<FormWrapperProps> = ({ children, footerLinks }) => {
       {children}
       <div className="px-2 xs:px-5 py-6 fixed bottom-0 min-w-full">
         <div className={`${!isMobile ? "flex justify-between" : ""}`}>
-          {!isMobile ? <Logo showText /> : <div />}
-          <div className="grid grid-cols-3 gap-x-2 xs:gap-x-4 gap-y-1 text-primary-300 text-lg">
+          {!isMobile ? <Logo showTextDefault /> : <div />}
+          <div
+            style={{
+              gridTemplateColumns: `repeat(${footerLinks.length},minmax(0,1fr))`,
+            }}
+            className="grid grid-cols-3 gap-x-2 xs:gap-x-6 gap-y-1 text-primary-300 text-lg"
+          >
             {footerLinks.map(({ href, text }, i) => (
               <Link
                 key={`footer-${i}`}
