@@ -32,6 +32,7 @@ interface HeaderProps extends FontWeightProps {
   centered?: boolean;
   color?: string;
   extraClassName?: string;
+  headerType: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -41,15 +42,16 @@ const Header: React.FC<HeaderProps> = ({
   centered,
   color = "text-button",
   extraClassName = "",
+  headerType: HeaderType,
 }) => {
   return (
-    <span
+    <HeaderType
       className={`flex items-center ${color} ${sizeClassNames[size]} ${
         fontWeightClassNames[fontWeight]
-      } ${centered ? "text-center" : ""} ${extraClassName}`}
+      } ${centered ? "justify-center" : ""} ${extraClassName}`}
     >
       {children}
-    </span>
+    </HeaderType>
   );
 };
 

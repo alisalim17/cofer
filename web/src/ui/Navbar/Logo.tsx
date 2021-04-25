@@ -13,7 +13,7 @@ interface LogoProps {
 const Logo: React.FC<LogoProps> = ({ showText = true }) => {
   const screenType = useScreenType();
 
-  const isShowText = !showText ? false : screenType === SCREEN_COLUMNS_TYPE[3];
+  const isShowText = showText || screenType === SCREEN_COLUMNS_TYPE[3];
 
   return (
     <Link noColor href="/">
@@ -36,6 +36,7 @@ const Logo: React.FC<LogoProps> = ({ showText = true }) => {
         </svg>
         {isShowText ? (
           <Header
+            headerType="h5"
             extraClassName="ml-2"
             color="text-accent-hover"
             size="3xl"

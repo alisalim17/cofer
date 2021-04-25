@@ -4,14 +4,28 @@ import { useRouter } from "next/router";
 import React from "react";
 import { MeDocument, MeQuery, useRegisterMutation } from "../generated/graphql";
 import Button from "../ui/Form/Button";
+import FormWrapper, { IFormFooterLink } from "../ui/Form/FormWrapper";
 import MyForm from "../ui/Form/MyForm";
 import InputField from "../ui/Form/TextField/InputField";
 import Header from "../ui/Header";
 import UnProtectedRoute from "../ui/utilities/UnProtectedRoute";
-import Link from "../ui/utilities/Link";
-import Wrapper from "../ui/utilities/Wrapper";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+
+const footerLinks: IFormFooterLink[] = [
+  {
+    href: "/login",
+    text: "Login",
+  },
+  {
+    href: "/login",
+    text: "Login",
+  },
+  {
+    href: "/login",
+    text: "Login",
+  },
+];
 
 interface FormValues {
   username: string;
@@ -28,7 +42,7 @@ const Register = () => {
       <Head>
         <title>Sign up | Cofer</title>
       </Head>
-      <Wrapper extraClassName="flex flex-col justify-center" mobileFull>
+      <FormWrapper footerLinks={footerLinks}>
         <Formik<FormValues>
           initialValues={{ username: "", email: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
@@ -55,12 +69,13 @@ const Register = () => {
           {({ isSubmitting }) => (
             <MyForm>
               <Header
+                headerType="h1"
                 centered
                 color="text-primary-100"
                 size="4xl"
                 fontWeight="bold"
               >
-                Cofer
+                Register
               </Header>
               <InputField
                 name="username"
@@ -80,6 +95,8 @@ const Register = () => {
                 type="password"
               />
               <Button
+                fontWeight="normal"
+                variant="primary"
                 width={175}
                 height={40}
                 extraClassName="mt-4"
@@ -92,12 +109,7 @@ const Register = () => {
             </MyForm>
           )}
         </Formik>
-        <div className="flex justify-center">
-          <div className="py-2 px-4 rounded-5 border-default border-primary-800 mt-4 text-sm">
-            Already have an account ? <Link href="/login">Sign in.</Link>
-          </div>
-        </div>
-      </Wrapper>
+      </FormWrapper>
     </UnProtectedRoute>
   );
 };

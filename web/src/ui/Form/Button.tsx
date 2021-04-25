@@ -64,7 +64,7 @@ const Button: React.FC<ButtonProps> = ({
           {children}
         </span>
         {loading ? (
-          <span className={`absolute`}>
+          <span className="absolute">
             <Loader />
           </span>
         ) : null}

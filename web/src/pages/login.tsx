@@ -4,15 +4,29 @@ import { useRouter } from "next/router";
 import React from "react";
 import { MeDocument, MeQuery, useLoginMutation } from "../generated/graphql";
 import Button from "../ui/Form/Button";
+import FormWrapper, { IFormFooterLink } from "../ui/Form/FormWrapper";
 import MyForm from "../ui/Form/MyForm";
 import InputField from "../ui/Form/TextField/InputField";
 import Header from "../ui/Header";
 import UnProtectedRoute from "../ui/utilities/UnProtectedRoute";
-import Link from "../ui/utilities/Link";
-import Wrapper from "../ui/utilities/Wrapper";
+import { useScreenType } from "../utils/hooks/useScreenType";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
-import FormFooter from "../ui/Form/FormFooter";
+
+const footerLinks: IFormFooterLink[] = [
+  {
+    href: "/register",
+    text: "Register",
+  },
+  {
+    href: "/register",
+    text: "Register",
+  },
+  {
+    href: "/register",
+    text: "Register",
+  },
+];
 
 interface FormValues {
   usernameOrEmail: string;
@@ -22,13 +36,14 @@ interface FormValues {
 const Login = () => {
   const [login] = useLoginMutation();
   const router = useRouter();
+  const screenType = useScreenType();
 
   return (
     <UnProtectedRoute>
       <Head>
         <title>Sign in | Cofer</title>
       </Head>
-      <Wrapper extraClassName="flex flex-col justify-center" mobileFull>
+      <FormWrapper footerLinks={footerLinks}>
         <Formik<FormValues>
           initialValues={{ usernameOrEmail: "", password: "" }}
           onSubmit={async (values, { setErrors }) => {
@@ -53,13 +68,8 @@ const Login = () => {
         >
           {({ isSubmitting }) => (
             <MyForm>
-              <Header
-                color="text-primary-100"
-                centered
-                size="4xl"
-                fontWeight="bold"
-              >
-                Cofer
+              <Header headerType="h1" fontWeight="semibold" size="3xl" centered>
+                Login
               </Header>
               <InputField
                 name="usernameOrEmail"
@@ -73,11 +83,13 @@ const Login = () => {
                 type="password"
               />
               <Button
+                fontWeight="normal"
                 width={175}
                 height={40}
                 extraClassName="mt-4"
                 loading={isSubmitting}
                 centered
+                variant="primary"
                 type="submit"
               >
                 Login
@@ -85,12 +97,9 @@ const Login = () => {
             </MyForm>
           )}
         </Formik>
-        <FormFooter>
-          New to Cofer? <Link href="/register">Create an account.</Link>
-        </FormFooter>
-      </Wrapper>
+      </FormWrapper>
     </UnProtectedRoute>
   );
 };
 
-export default withApollo({ ssr: false })(Login);
+export default withApollo({ ssr: true })(Login);

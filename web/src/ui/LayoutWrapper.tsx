@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  SCREEN_COLUMNS_TYPE,
-  useScreenType,
-} from "../utils/hooks/useScreenType";
-import CenteredLoader from "./Loader/CenteredLoader";
-import ScreenLayout, { ScreenLayoutProps } from "./ScreenLayout";
+import { SCREEN_COLUMNS_TYPE } from "../utils/hooks/useScreenType";
 
 interface Props {
   screenType: string;
