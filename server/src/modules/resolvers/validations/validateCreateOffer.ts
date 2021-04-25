@@ -1,6 +1,7 @@
 import { Review } from "../../../entities/Review";
-import { CreateOfferInput } from "../types/Input/review/CreateOfferInput";
+import { CreateOfferInput } from "../types/Input/offer/CreateOfferInput";
 import { CreateOfferResponse } from "../types/Response/codeReview/createOfferResponse";
+import { FieldError } from "./../types/Response/FieldError";
 
 type Result = CreateOfferResponse | undefined;
 
@@ -11,34 +12,37 @@ interface Response {
 }
 
 export const validateCreateOffer = async (
-  input: CreateOfferInput
+  input: CreateOfferInput,
+  userId: string
 ): Promise<Response> => {
-  const cantFoundReviewErrs = [
-    { field: "codeUrl", message: "Couldn`t found the review" },
-  ];
-
-  let res;
+  const noReviewErr = {
+    field: "codeUrl",
+    message: "Couldn`t found the review",
+  };
+  const errors: FieldError[] = [];
   let review;
 
   try {
     review = await Review.findOne(input.reviewId);
-    if (!review) {
-      res = {
-        ok: false,
-        errors: cantFoundReviewErrs,
-      };
-    }
+    console.log(review, userId);
+    if (review?.ownerId == userId)
+      errors.push({
+        field: "general",
+        message: "You can't give offer to your code review",
+      });
+    if (!review) errors.push(noReviewErr);
   } catch (err) {
-    if (err.code === "22P02") {
-      res = {
-        ok: false,
-        errors: cantFoundReviewErrs,
-      };
-    }
+    // invalid uuid
+    if (err.code === "22P02") errors.push(noReviewErr);
   }
+
+  const valid = errors.length === 0;
   return {
-    valid: res ? false : true,
-    res,
+    valid,
+    res: {
+      ok: valid,
+      errors,
+    },
     review,
   };
 };

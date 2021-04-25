@@ -1,13 +1,13 @@
-import { Resolver } from "node:dns";
-import { Offer } from "src/entities/Offer";
-import { isAuth } from "src/modules/middlewares/isAuth";
-import { errorMessages } from "src/modules/shared/registirationErrorMessages";
-import { MyContext } from "src/types/MyContext";
-import { formatYupError } from "src/utils/formatYupError";
-import { Mutation, UseMiddleware, Arg, Ctx } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import { CreateOfferInput } from "../../types/Input/offer/CreateOfferInput";
 import { CreateOfferResponse } from "../../types/Response/codeReview/createOfferResponse";
 import { validateCreateOffer } from "../../validations/validateCreateOffer";
+import * as yup from "yup";
+import { errorMessages } from "../../codeRequest/create/errorMessages";
+import { Offer } from "../../../../entities/Offer";
+import { isAuth } from "../../../middlewares/isAuth";
+import { MyContext } from "../../../../types/MyContext";
+import { formatYupError } from "../../../../utils/formatYupError";
 
 const schema = yup.object().shape({
   codeUrl: yup
@@ -16,7 +16,7 @@ const schema = yup.object().shape({
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
       errorMessages.codeUrlBad
     )
-    .required("Please enter website"),
+    .required("Please enter valid url"),
 });
 
 @Resolver(Offer)
@@ -36,7 +36,10 @@ export class CreateOfferResolver {
       };
     }
 
-    const { res, valid, review } = await validateCreateOffer(input);
+    const { res, valid, review } = await validateCreateOffer(
+      input,
+      req.session?.userId!
+    );
     if (!valid) return res!;
 
     await Offer.create({

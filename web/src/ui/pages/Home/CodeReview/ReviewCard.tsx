@@ -94,14 +94,15 @@ const ReviewCard: React.FC<CodeReviewRequestProps> = ({
               by {isOwner ? "you" : username}
             </small>
           </div>
-
-          <Link
-            noColor
-            href={`/create-offer/${id}`}
-            extraClassName="text-sm transition-colors duration-300 ease-in-out text-primary-100"
-          >
-            Give Offer
-          </Link>
+          {isOwner ? null : (
+            <Link
+              noColor
+              href={`/create-offer/${id}`}
+              extraClassName="text-sm transition-colors duration-300 ease-in-out text-primary-100"
+            >
+              Give Offer
+            </Link>
+          )}
         </div>
         <div className="flex space-x-2 mt-2 sm:mt-0">{tagsBody}</div>
       </div>

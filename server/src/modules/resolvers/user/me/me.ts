@@ -7,7 +7,6 @@ export class MeResolver {
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
     if (!req.session.userId) return null;
-    console.log("mee");
     return User.findOne(req.session.userId);
   }
 }

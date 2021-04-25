@@ -6,9 +6,9 @@ import { User } from "../../../../entities/User";
 import { MyContext } from "../../../../types/MyContext";
 import { formatYupError } from "../../../../utils/formatYupError";
 import { errorMessages } from "../../../shared/registirationErrorMessages";
-import { LoginInput } from "../../types/Input/LoginInput";
 import { FieldError } from "../../types/Response/FieldError";
 import { RegisterResponse } from "../../types/Response/user/RegisterResponse";
+import { LoginInput } from "../../types/Input/user/LoginInput";
 
 const schema = yup.object().shape({
   usernameOrEmail: yup.string().min(2, errorMessages.usernameShort),
