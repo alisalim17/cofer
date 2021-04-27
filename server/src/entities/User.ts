@@ -1,35 +1,29 @@
-import { Field, ObjectType } from "type-graphql";
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { Review } from "./Review";
-import { Offer } from "./Offer";
+import { Field, ObjectType, Int, ID } from "type-graphql";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(() => String)
+  @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Field(() => String)
-  @Column({ unique: true })
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", unique: true, nullable: true })
   username!: string;
 
-  @Field(() => String)
-  @Column({ unique: true })
-  email!: string;
+  @Field(() => ID, { nullable: true })
+  @Column({ type: "text", unique: true, nullable: true })
+  githubId: string;
 
-  @Column()
-  password!: string;
+  @Field()
+  @Column({ type: "text" })
+  pictureUrl!: string;
 
-  @OneToMany(() => Review, (crr) => crr.owner)
-  codeReview: Review[];
+  @Field()
+  @Column({ type: "text" })
+  bio!: string;
 
-  @OneToMany(() => Offer, (offer) => offer.owner)
-  offers: Offer[];
+  @Column({ type: "text", nullable: true })
+  password: string;
 }

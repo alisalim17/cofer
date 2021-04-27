@@ -1,17 +1,16 @@
-import "reflect-metadata";
-import { ApolloServer } from "apollo-server-express";
 import cors from "cors";
 import express from "express";
-import { MyContext } from "./types/MyContext";
+import "reflect-metadata";
+import { createApolloServer } from "./utils/createApolloServer";
 import { createTypeormConn } from "./utils/createTypeormConn";
-import { createSchema } from "./utils/createSchema";
-import { redis } from "./utils/redis";
 import { sessionMiddleware } from "./utils/sessionMiddleware";
-import {
-  fieldExtensionsEstimator,
-  getComplexity,
-  simpleEstimator,
-} from "graphql-query-complexity";
+require("dotenv-safe").config();
+import passport from "passport";
+import { Strategy as GitHubStrategy } from "passport-github";
+import { User } from "./entities/User";
+import { MyContext } from "./types/MyContext";
+import { COOKIE_NAME } from "./utils/constants";
+
 const PORT = process.env.PORT || 4000;
 
 export const startServer = async () => {
@@ -28,43 +27,73 @@ export const startServer = async () => {
     })
   );
 
+  app.use((req, _, next) => {
+    const authorization = req.headers.authorization;
+    console.log("authoriza", authorization);
+    if (authorization) {
+      try {
+        const qid = authorization.split(" ")[1];
+
+        req.headers.cookie = `${COOKIE_NAME}=${qid}`;
+        console.log("cookie", req.headers);
+      } catch (_) {}
+    }
+    return next();
+  });
+
   app.use(sessionMiddleware);
 
-  const schema = await createSchema();
-
-  const apolloServer = new ApolloServer({
-    schema,
-    context: ({ req, res }: MyContext) => ({
-      req,
-      res,
-      redis,
-    }),
-    plugins: [
+  passport.use(
+    new GitHubStrategy(
       {
-        requestDidStart: () => ({
-          didResolveOperation({ request, document }) {
-            const complexity = getComplexity({
-              schema,
-              operationName: request.operationName,
-              query: document,
-              variables: request.variables,
-              estimators: [
-                fieldExtensionsEstimator(),
-                simpleEstimator({ defaultComplexity: 1 }),
-              ],
-            });
-            const maximumComplexity = 20;
-            if (complexity > maximumComplexity) {
-              throw new Error(
-                `Sorry, too complicated query! ${complexity} is over ${maximumComplexity} that is the max allowed complexity.`
-              );
-            }
-          },
-        }),
+        clientID: process.env.GITHUB_CLIENT_ID!,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+        callbackURL: "http://localhost:4000/oauth/github",
       },
-    ],
-    uploads: false,
-  });
+      async (accessToken, refreshToken, profile: any, cb) => {
+        console.log("profile", profile);
+        let user = await User.findOne({ where: { githubId: profile.id } });
+
+        if (!user) {
+          const {
+            id,
+            _json: { avatar_url, bio },
+          } = profile;
+          user = await User.create({
+            githubId: id,
+            pictureUrl: avatar_url,
+            bio,
+          }).save();
+        }
+        cb(null, {
+          user,
+          accessToken,
+          refreshToken,
+        });
+      }
+    )
+  );
+  app.use(passport.initialize());
+
+  app.get("/auth/github", passport.authenticate("github", { session: false }));
+
+  app.get(
+    "/oauth/github",
+    passport.authenticate("github", {
+      failureRedirect: "/login",
+      session: false,
+    }),
+    (req: any, res) => {
+      console.log("user", req.user);
+      req.session.userId = req.user.user.id;
+      req.session.accessToken = req.user.accessToken;
+      req.session.refreshToken = req.user.refreshToken;
+      // Successful authentication, redirect home.
+      res.redirect("http://localhost:3000");
+    }
+  );
+
+  const apolloServer = await createApolloServer();
 
   apolloServer.applyMiddleware({
     app,

@@ -12,6 +12,7 @@ import UnProtectedRoute from "../ui/utilities/UnProtectedRoute";
 import { useScreenType } from "../utils/hooks/useScreenType";
 import { toErrorMap } from "../utils/toErrorMap";
 import { withApollo } from "../utils/withApollo";
+import Link from "./../ui/utilities/Link";
 
 const footerLinks: IFormFooterLink[] = [
   {
@@ -94,6 +95,9 @@ const Login = () => {
               >
                 Login
               </Button>
+              <Link href="http://localhost:4000/auth/github">
+                login with github
+              </Link>
             </MyForm>
           )}
         </Formik>
