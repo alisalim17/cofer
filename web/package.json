@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.14",
     "@badrap/bar-of-progress": "^0.1.2",
+    "apollo-link-context": "^1.0.20",
     "cookie": "^0.4.1",
     "emoji-regex": "^9.2.2",
     "formik": "^2.2.6",

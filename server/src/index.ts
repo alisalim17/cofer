@@ -27,20 +27,6 @@ export const startServer = async () => {
     })
   );
 
-  app.use((req, _, next) => {
-    const authorization = req.headers.authorization;
-    console.log("authoriza", authorization);
-    if (authorization) {
-      try {
-        const qid = authorization.split(" ")[1];
-
-        req.headers.cookie = `${COOKIE_NAME}=${qid}`;
-        console.log("cookie", req.headers);
-      } catch (_) {}
-    }
-    return next();
-  });
-
   app.use(sessionMiddleware);
 
   passport.use(
@@ -49,6 +35,7 @@ export const startServer = async () => {
         clientID: process.env.GITHUB_CLIENT_ID!,
         clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         callbackURL: "http://localhost:4000/oauth/github",
+        scope: "user:email", // fetches non-public emails as well
       },
       async (accessToken, refreshToken, profile: any, cb) => {
         console.log("profile", profile);

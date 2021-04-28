@@ -12,18 +12,24 @@ export class User extends BaseEntity {
   @Column({ type: "text", unique: true, nullable: true })
   username!: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", unique: true, nullable: true })
+  email!: string;
+
   @Field(() => ID, { nullable: true })
   @Column({ type: "text", unique: true, nullable: true })
   githubId: string;
 
-  @Field()
-  @Column({ type: "text" })
-  pictureUrl!: string;
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
+  pictureUrl: string;
 
-  @Field()
-  @Column({ type: "text" })
+  @Field(() => String, { nullable: true })
+  @Column({ type: "text", nullable: true })
   bio!: string;
 
   @Column({ type: "text", nullable: true })
   password: string;
+
+  // TODO add here before insert to hash password automaticly
 }
