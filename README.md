@@ -8,7 +8,7 @@
 
 ## What is Cofer ? 
 > You can send review request to change code(like github).
-> We will be add more features,please add a feature here :)
+> We will be add more features,please add a feature here
 
 Contributors helping to review/merge pull requests:
 
